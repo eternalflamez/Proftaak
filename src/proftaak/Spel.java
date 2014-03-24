@@ -18,9 +18,9 @@ public class Spel {
     private int moeilijkheidsgraad;
     private Puck puck;
     private List<Speler> spelers;
-    private ChatBox chatbox;
+    private Chatbox chatbox;
     
-    public Spel(String naam, Gebruiker host, Boolean public)
+    public Spel(String naam, Gebruiker host, Boolean publicGame)
     {
         
     }
