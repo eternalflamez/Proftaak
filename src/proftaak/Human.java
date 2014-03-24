@@ -6,18 +6,18 @@
 
 package proftaak;
 
-import java.awt.Point;
-
 /**
  *
  * @author Sander
  */
-public class Bat {
-    private String kleur;
-    private Point positie;
-    
-    public Bat(String kleur, Point positie)
+public class Human extends Speler {
+    public Human(String naam, int score)
     {
-        
+        super(naam, score);
+    }
+    
+    public void beweeg()
+    {
+        // Todo, get keyinput en beweeg
     }
 }
