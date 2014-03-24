@@ -6,10 +6,23 @@
 
 package proftaak;
 
+import java.util.List;
+
 /**
  *
  * @author Stephan
  */
 public class Chatbox {
+    private int id;
+    private List<Bericht> berichtenlijst;
     
+    public Chatbox()
+    {
+        
+    }
+    
+    public void voegBerichtToe(String bericht, Gebruiker g)
+    {
+        
+    }
 }
