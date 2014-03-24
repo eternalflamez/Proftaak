@@ -57,6 +57,6 @@ public class Spel {
     
     public int getMoeilijkheidsgraad()
     {
-        
+        return -1;
     }
 }
