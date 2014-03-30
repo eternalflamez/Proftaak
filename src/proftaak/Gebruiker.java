@@ -19,4 +19,19 @@ public class Gebruiker {
     {
         
     }
+    
+    public String getNaam()
+    {
+        return naam;
+    }
+    
+    public int getScore()
+    {
+        return highScore;
+    }
+    
+    public int getRating()
+    {
+        return rating;
+    }
 }
