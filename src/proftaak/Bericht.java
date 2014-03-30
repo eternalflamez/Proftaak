@@ -6,18 +6,30 @@
 
 package proftaak;
 
-import java.util.Calendar;
 
 /**
  *
  * @author Stephan
  */
-public class Bericht {
+public class Bericht implements Comparable<Bericht>{
     private String bericht;
-    private Calendar timestamp;
+    private long timestamp;
     private Gebruiker gebruiker;
     
     public Bericht(String Bericht, Gebruiker gebruiker)
     {    
+        this.bericht = Bericht;
+        this.gebruiker = gebruiker;
+        timestamp = System.currentTimeMillis();
     }
+    public long getTimestamp()
+    {
+        return timestamp;
+    }
+
+    @Override
+    public int compareTo(Bericht b) {
+        return this.timestamp<b.timestamp?-1: 
+                this.timestamp>b.timestamp?1:0;
+       }
 }
