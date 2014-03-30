@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package proftaak;
 
-
 import java.awt.Point;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
@@ -19,30 +16,37 @@ import javafx.scene.transform.Rotate;
  * @author Sander
  */
 public class Bat {
-    private Color kleur;
-    private Point positie;
-    
+
+    private final Color kleur;
+    private final Point positie;
+
+    private Rectangle rect;
     private double richting;
-    
-    public Bat(String kleur, Point positie)
-    {
+
+    public Bat(Color kleur, Point positie) {
         
+        this.kleur = kleur;
+        this.positie = positie;
+
     }
     
-    public void Draw(Canvas canvas){
+    
+    public void beweeg(int beweging)
+    {
+        positie.x *= beweging;
+        positie.y *= beweging;
+    }
+
+    public void AddRect(Group group) {
+
+        if (rect != null) {
+            group.getChildren().remove(rect);
+        }
         
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        Rectangle Rect = new Rectangle(100,25,kleur);
-        Rect.getTransforms().add(new Rotate(richting));
-        
-        
-                
-        
-        
-        
-        
-        
-        
+        rect = new Rectangle(100, 25, kleur);
+        rect.getTransforms().add(new Rotate(richting));
+
+        group.getChildren().add(rect);
+
     }
 }
