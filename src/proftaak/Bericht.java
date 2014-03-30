@@ -26,6 +26,14 @@ public class Bericht implements Comparable<Bericht>{
     {
         return timestamp;
     }
+    public Gebruiker getGebruiker()
+    {
+        return gebruiker;
+    }
+    public String getBericht()
+    {
+        return bericht;
+    }
 
     @Override
     public int compareTo(Bericht b) {

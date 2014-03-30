@@ -27,6 +27,8 @@ public class Chatbox {
     {
         Bericht b = new Bericht(bericht, g);
         berichtenlijst.add(b);
+        
+        Collections.sort(berichtenlijst);
     }
     public List<Bericht> getBerichtenlijst()
     {
