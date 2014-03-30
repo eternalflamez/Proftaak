@@ -20,4 +20,8 @@ public class Speler {
     {
         
     }
+    
+    public void addScore(){
+        score++;
+    }
 }

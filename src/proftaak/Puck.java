@@ -7,6 +7,8 @@
 package proftaak;
 
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -16,14 +18,32 @@ public class Puck {
     private float grootte;
     private Point richting;
     private Point positie;
+    private Ellipse2D shape;
     
-    public Puck(Point positie, float grootte)
+    public Puck(Point positie, float grootte, Point richting)
     {
+        this.grootte = grootte;
+        this.richting = richting;
+        this.positie = positie;
         
+        shape = new Ellipse2D.Double(positie.x, positie.y, grootte, grootte);
     }
     
     public void beweegPuck(Point richting)
     {
+        positie.x += richting.x;
+        positie.y += richting.y;
         
+        shape.setFrame(positie.x, positie.y, grootte, grootte);
+    }
+    
+    public Boolean botstMet(Rectangle2D other)
+    {
+        return shape.intersects(other);
+    }
+    
+    public Ellipse2D getShape()
+    {
+        return shape;
     }
 }
