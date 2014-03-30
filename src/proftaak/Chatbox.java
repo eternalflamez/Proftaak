@@ -6,6 +6,8 @@
 
 package proftaak;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,11 +20,16 @@ public class Chatbox {
     
     public Chatbox()
     {
-        
+        berichtenlijst = new ArrayList<Bericht>(){};
     }
     
     public void voegBerichtToe(String bericht, Gebruiker g)
     {
-        
+        Bericht b = new Bericht(bericht, g);
+        berichtenlijst.add(b);
+    }
+    public List<Bericht> getBerichtenlijst()
+    {
+        return berichtenlijst;
     }
 }
