@@ -5,7 +5,9 @@
  */
 package proftaak;
 
-import java.awt.Point;
+
+
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,12 +20,12 @@ import javafx.scene.transform.Rotate;
 public class Bat {
 
     private final Color kleur;
-    private final Point positie;
+    private  Point2D positie;
 
     private Rectangle rect;
     private double richting;
 
-    public Bat(Color kleur, Point positie) {
+    public Bat(Color kleur, Point2D positie) {
         
         this.kleur = kleur;
         this.positie = positie;
@@ -33,8 +35,8 @@ public class Bat {
     
     public void beweeg(int beweging)
     {
-        positie.x *= beweging;
-        positie.y *= beweging;
+        positie = new Point2D(positie.getX() + beweging, positie.getY() + beweging);
+
     }
 
     public void AddRect(Group group) {
@@ -45,8 +47,11 @@ public class Bat {
         
         rect = new Rectangle(100, 25, kleur);
         rect.getTransforms().add(new Rotate(richting));
+        rect.setLayoutX(positie.getX());
+        rect.setLayoutY(positie.getY());
 
         group.getChildren().add(rect);
-
+        
+        
     }
 }
