@@ -6,9 +6,9 @@
 
 package proftaak;
 
-import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import javafx.geometry.Point2D;
 
 /**
  *
@@ -16,25 +16,23 @@ import java.awt.geom.Rectangle2D;
  */
 public class Puck {
     private float grootte;
-    private Point richting;
-    private Point positie;
+    private Point2D richting;
+    private Point2D positie;
     private Ellipse2D shape;
     
-    public Puck(Point positie, float grootte, Point richting)
+    public Puck(Point2D positie, float grootte, Point2D richting)
     {
         this.grootte = grootte;
         this.richting = richting;
         this.positie = positie;
         
-        shape = new Ellipse2D.Double(positie.x, positie.y, grootte, grootte);
+        shape = new Ellipse2D.Double(positie.getX(), positie.getY(), grootte, grootte);
     }
     
-    public void beweegPuck(Point richting)
+    public void beweegPuck(Point2D richting)
     {
-        positie.x += richting.x;
-        positie.y += richting.y;
-        
-        shape.setFrame(positie.x, positie.y, grootte, grootte);
+        positie = new Point2D(positie.getX() + richting.getX(), positie.getY() + richting.getY());
+        shape.setFrame(positie.getX(), positie.getY(), grootte, grootte);
     }
     
     public Boolean botstMet(Rectangle2D other)
