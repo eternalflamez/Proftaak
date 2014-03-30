@@ -6,14 +6,17 @@
 
 package proftaak;
 
+import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Sander
  */
 public class Human extends Speler {
-    public Human(String naam, int score)
+    public Human(String naam, int rating, Color kleur, Point2D batLokatie)
     {
-        super(naam, score);
+       super(naam, rating, kleur, batLokatie);
     }
     
     public void beweeg()
