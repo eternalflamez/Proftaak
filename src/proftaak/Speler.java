@@ -27,11 +27,16 @@ public class Speler {
     {
         this.rating = rating;
         this.bat = new Bat(kleur, batLokatie);
-        
+        this.naam = naam;
     }
     
     public void addScore(){
         score++;
+    }
+    
+    public String getNaam()
+    {
+        return naam;
     }
         
     public int getRating()
