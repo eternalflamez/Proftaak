@@ -37,6 +37,7 @@ public class Speler {
         score++;
     }
     
+    // TODO: Dit moet eigenlijk bij Gebruiker
     public void berekenRating(int nieuwScore){
         
         if (scoreLijst.size() > 4)
@@ -52,5 +53,10 @@ public class Speler {
             rating += scoreLijst.get(i)* 5-i;
         }
         
+    }
+    
+    public int getRating()
+    {
+        return rating;
     }
 }
