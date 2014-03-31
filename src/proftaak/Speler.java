@@ -19,11 +19,11 @@ import javafx.scene.paint.Color;
 public class Speler {
     private String naam;
     private int score;
-    private int rating;
+    private double rating;
   
     private final Bat bat;
     
-    public Speler(String naam, int rating, Color kleur, Point2D batLokatie)
+    public Speler(String naam, double rating, Color kleur, Point2D batLokatie)
     {
         this.rating = rating;
         this.bat = new Bat(kleur, batLokatie);
@@ -39,7 +39,7 @@ public class Speler {
         return naam;
     }
         
-    public int getRating()
+    public double getRating()
     {
         return rating;
     }
