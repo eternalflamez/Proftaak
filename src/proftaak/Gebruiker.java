@@ -16,14 +16,14 @@ public class Gebruiker {
     private final ArrayList<Integer> scoreLijst;
     private String naam;
     private int highScore;
-    private int rating;
+    private double rating;
     
     public Gebruiker(String naam)
     {
         this.scoreLijst = new ArrayList<>();
         this.naam = naam;
         highScore = 0;
-        rating = 0;
+        rating = 15;
     }
     
     public String getNaam()
@@ -36,14 +36,17 @@ public class Gebruiker {
         return highScore;
     }
     
-    public int getRating()
+    public double getRating()
     {
         return rating;
     }
     
     public void setNewHighscore(int newScore)
     {
-        this.highScore = newScore;
+        if (newScore > this.highScore)
+        {
+            this.highScore = newScore;
+        }
     }
     
     public void berekenRating(int nieuwScore){

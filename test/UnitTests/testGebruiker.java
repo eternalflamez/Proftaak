@@ -20,6 +20,7 @@ import proftaak.Gebruiker;
  */
 public class testGebruiker {
     
+        Gebruiker g;
     public testGebruiker() {
     }
     
@@ -33,6 +34,7 @@ public class testGebruiker {
     
     @Before
     public void setUp() {
+        g = new Gebruiker("Kees");
     }
     
     @After
@@ -44,8 +46,14 @@ public class testGebruiker {
     //
      @Test
      public void testGet() {
-         Gebruiker g = new Gebruiker("Kees");
          assertEquals("Kees", g.getNaam());
-         g.getScore();
+         assertEquals(0, g.getScore());
+         assertEquals(15, g.getRating(), 0);
+     }
+     @Test
+     public void testSetScore() {
+         g.setNewHighscore(20);
+         g.setNewHighscore(15);
+         assertEquals(20, g.getScore());
      }
 }
