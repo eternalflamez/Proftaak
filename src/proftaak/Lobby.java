@@ -25,6 +25,8 @@ public class Lobby implements Observer{
     public Lobby()
     {
         chatbox = new Chatbox();
+        gebruikers = new ArrayList<>();
+        spellen = new ArrayList<>();
     }
     
     /**
@@ -33,7 +35,7 @@ public class Lobby implements Observer{
      */
     public List<Spel> getSpellen()
     {
-        return spellen;
+        return Collections.unmodifiableList(spellen);
     }
     
     /**
@@ -52,11 +54,23 @@ public class Lobby implements Observer{
      */
     public void voegSpelToe(String naam, Boolean publicGame)
     {
-        Spel nieuwSpel = new Spel(naam, gebruiker, publicGame, spellen.size()+1);
+        Spel nieuwSpel;
+        if(spellen.size() > 0)
+        {
+            nieuwSpel = new Spel(naam, gebruiker, publicGame, spellen.get(spellen.size()).getId()+1);
+        }
+        else
+        {
+            nieuwSpel = new Spel(naam, gebruiker, publicGame, 0);
+        }
         nieuwSpel.addObserver(this);
         spellen.add(nieuwSpel);
     }
     
+    /**
+     * 
+     * @return Lijst met highscores van alle gebruikers in de lobby.
+     */
     public List<Integer> toonHighScores()
     {
         List<Integer> highScores = new ArrayList<>();
@@ -82,16 +96,30 @@ public class Lobby implements Observer{
         return true;
     }
     
+    /**
+     * Gebruiker uitloggen (nog niet geimplementeerd)
+     */
     public void logout()
     {
         //Bewaard voor volgende iteratie
     }
     
+    /**
+     * Bericht toevoegen aan de chatbox
+     * @param bericht string met inhoud van het bericht
+     */
     public void stuurBericht(String bericht)
     {
         chatbox.voegBerichtToe(bericht, gebruiker);
     }
     
+    /**
+     * Nieuwe gebruiker registreren (nog niet geimplementeerd)
+     * @param naam
+     * @param wachtwoord
+     * @param email
+     * @return 
+     */
     public Boolean registreer(String naam, String wachtwoord, String email)
     {
         //Bewaard voor volgende iteratie
@@ -101,6 +129,13 @@ public class Lobby implements Observer{
     @Override
     public void update(Observable o, Object arg)
     {
-        
+        for(int i = 0; i < spellen.size(); i++)
+        {
+            Spel s = spellen.get(i);
+            if(s.getId() == ((Spel)o).getId())
+            {
+                spellen.remove(i);
+            }
+        }
     }
 }
