@@ -8,6 +8,7 @@ package proftaak;
 
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -21,15 +22,26 @@ import javafx.scene.paint.Color;
 public class Spel extends Observable {
     private String naam;
     private int id;
-    private int moeilijkheidsgraad;
+    private double moeilijkheidsgraad;
     private Puck puck;
     private List<Speler> spelers;
     private List<Gebruiker> gebruikers;
     private Chatbox chatbox;
     private List<Color> colors;
     
+    /**
+     * Creates a new spel object.
+     * @param naam The name of the game.
+     * @param host The person that hosts the game.
+     * @param publicGame If this is false, we are playing with bots.
+     * @param id The id of the game.
+     */
     public Spel(String naam, Gebruiker host, Boolean publicGame, int id)
     {
+        colors = new ArrayList();
+        spelers = new ArrayList();
+        gebruikers = new ArrayList();
+        
         int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
         int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
 
@@ -139,14 +151,13 @@ public class Spel extends Observable {
         for(Gebruiker gebruiker : gebruikers)
         {
             // Pak rating van andere spelers en telt bij elkaar op.
-            int totalOthersRating = totalRating - gebruiker.getRating();
-            int points = (totalOthersRating - 2 * gebruiker.getRating()) / 8;
-
-            gebruiker.berekenRating(points);
-            
-            // Kijkt of huidige score meer is dan de highscore.
+            double totalOthersRating = totalRating - gebruiker.getRating();
+            double points = (totalOthersRating - 2 * gebruiker.getRating()) / 8;
             int score = spelers.get(counter).getScore();
             
+            gebruiker.berekenRating(points + score);
+            
+            // Kijkt of huidige score meer is dan de highscore.
             if(score > gebruiker.getScore())
             {
                 gebruiker.setNewHighscore(score);
@@ -158,18 +169,22 @@ public class Spel extends Observable {
     
     /**
      * Adds a point to a certain player.
-     * @param s The player that scored.
+     * @param winner The player that scored.
+     * @param loser The player that was scored at.
      */
-    public void updateScore(Speler s)
+    public void updateScore(Speler winner, Speler loser)
     {
-        s.addScore();
+        // TODO: een removeScore toevoegen.
+        winner.addScore();
+        
+        // loser.removeScore();
     }
     
     /**
      * Gets the difficulty level of the game, based on the average rating of the players.
      * @return The average rating of all players in the game.
      */
-    public int getMoeilijkheidsgraad()
+    public double getMoeilijkheidsgraad()
     {
         return moeilijkheidsgraad;
     }
