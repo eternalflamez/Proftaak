@@ -13,14 +13,14 @@ import java.util.ArrayList;
  * @author Sander
  */
 public class Gebruiker {
-    private final ArrayList<Integer> scoreLijst;
+    private final ArrayList<Double> ratingLijst;
     private String naam;
     private int highScore;
     private double rating;
     
     public Gebruiker(String naam)
     {
-        this.scoreLijst = new ArrayList<>();
+        this.ratingLijst = new ArrayList<>();
         this.naam = naam;
         highScore = 0;
         rating = 15;
@@ -49,20 +49,19 @@ public class Gebruiker {
         }
     }
     
-    public void berekenRating(int nieuwScore){
+    public void berekenRating(double nieuwScore){
         
-        if (scoreLijst.size() > 4)
+        if (ratingLijst.size() > 4)
         {
-            scoreLijst.remove(4);
+            ratingLijst.remove(4);
         }
-        scoreLijst.add(0, nieuwScore);
+        ratingLijst.add(0, nieuwScore);
         
         rating = 0;
         
-        for (int i = 0 ; i < scoreLijst.size();i++){
+        for (int i = 0 ; i < ratingLijst.size();i++){
             
-            rating += scoreLijst.get(i)* 5-i;
+            rating += ratingLijst.get(i)* 5-i;
         }
-        
     }
 }
