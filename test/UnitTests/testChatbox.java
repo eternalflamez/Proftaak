@@ -1,3 +1,5 @@
+package UnitTests;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -54,7 +56,7 @@ public class testChatbox {
         chatbox.voegBerichtToe("bericht2", g2);
         chatbox.voegBerichtToe("bericht3", g2);
         
-        assertEquals("Niet alle berichten toegevoegd.", chatbox.getBerichtenlijst().size(), 2);
+        assertEquals("Niet alle berichten toegevoegd.", chatbox.getBerichtenlijst().size(), 3);
         
         int testInt = 0;
         for(Bericht bericht: chatbox.getBerichtenlijst())

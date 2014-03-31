@@ -21,6 +21,9 @@ public class Gebruiker {
     public Gebruiker(String naam)
     {
         this.scoreLijst = new ArrayList<>();
+        this.naam = naam;
+        highScore = 0;
+        rating = 0;
     }
     
     public String getNaam()
