@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
  */
 public class Speler {
     private String naam;
-    private final ArrayList<Integer> scoreLijst;
     private int score;
     private int rating;
   
@@ -27,8 +26,6 @@ public class Speler {
     public Speler(String naam, int rating, Color kleur, Point2D batLokatie)
     {
         this.rating = rating;
-        this.scoreLijst = new ArrayList<>();
-        
         this.bat = new Bat(kleur, batLokatie);
         
     }
@@ -36,27 +33,14 @@ public class Speler {
     public void addScore(){
         score++;
     }
-    
-    // TODO: Dit moet eigenlijk bij Gebruiker
-    public void berekenRating(int nieuwScore){
         
-        if (scoreLijst.size() > 4)
-        {
-            scoreLijst.remove(4);
-        }
-        scoreLijst.add(0, nieuwScore);
-        
-        rating = 0;
-        
-        for (int i = 0 ; i < scoreLijst.size();i++){
-            
-            rating += scoreLijst.get(i)* 5-i;
-        }
-        
-    }
-    
     public int getRating()
     {
         return rating;
+    }
+    
+    public int getScore()
+    {
+        return score;
     }
 }
