@@ -56,4 +56,12 @@ public class testGebruiker {
          g.setNewHighscore(15);
          assertEquals(20, g.getScore());
      }
+     @Test
+     public void testRating(){
+         assertEquals(15.0, g.getRating(), 0.01);
+         g.berekenRating(20);
+         assertEquals(17.5, g.getRating(),0.01);
+         g.berekenRating(12.5);
+         assertEquals(15.0, g.getRating(),0.01);
+     }
 }

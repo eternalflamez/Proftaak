@@ -22,6 +22,10 @@ public class Bericht implements Comparable<Bericht>{
         this.gebruiker = gebruiker;
         timestamp = System.currentTimeMillis();
     }
+    /**
+     * 
+     * @return het tijdstip waarop het bericht is geplaatst in ms.
+     */
     public long getTimestamp()
     {
         return timestamp;
@@ -35,6 +39,12 @@ public class Bericht implements Comparable<Bericht>{
         return bericht;
     }
 
+    /**
+     * Zorgt ervoor dat de berichten gesorteerd worden op tijdstip.
+     * @param b het bericht
+     * @return -1 als this.timestamp < b.timestamp
+     * 1 als this.timestamp>b.timestamp
+     */
     @Override
     public int compareTo(Bericht b) {
         return this.timestamp<b.timestamp?-1: 

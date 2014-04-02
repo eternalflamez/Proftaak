@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import proftaak.Lobby;
 
 /**
  *
@@ -19,6 +20,7 @@ import static org.junit.Assert.*;
  */
 public class testLobby {
     
+    Lobby lobby1 = new Lobby();
     public testLobby() {
     }
     
@@ -41,6 +43,25 @@ public class testLobby {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void testLogin() {
+    lobby1.login("Kees", "hoi");
+    assertEquals("Kees", lobby1.getGebruikers().get(0).getNaam());    
+    }
+    
+    @Test
+    public void testVoegSpel() {
+        
+    lobby1.login("Kees", "hoi");
+    lobby1.voegSpelToe("Spel1", Boolean.FALSE);
+    assertEquals("Spel1", lobby1.getSpellen().get(0).getNaam());
+    assertEquals("Kees", lobby1.getSpellen().get(0).getSpelers().get(0).getNaam());    
+    }
+    @Test
+    public void testVoegBericht(){
+        
+    lobby1.login("Kees", "hoi");
+    lobby1.stuurBericht("Bericht1");
+    //get chatbox??
+    }
 }

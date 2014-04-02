@@ -16,13 +16,17 @@ import java.util.List;
  */
 public class Chatbox {
     private int id;
-    private List<Bericht> berichtenlijst;
+    private ArrayList<Bericht> berichtenlijst;
     
     public Chatbox()
     {
         berichtenlijst = new ArrayList<Bericht>(){};
     }
-    
+    /**
+     * Een bericht object wordt hierin gemaakt.
+     * @param bericht Het bericht in String
+     * @param g de gebruiker
+     */
     public void voegBerichtToe(String bericht, Gebruiker g)
     {
         Bericht b = new Bericht(bericht, g);
@@ -30,7 +34,12 @@ public class Chatbox {
         
         Collections.sort(berichtenlijst);
     }
-    public List<Bericht> getBerichtenlijst()
+    
+    /**
+     * 
+     * @return De arraylist met berichten.
+     */
+    public ArrayList<Bericht> getBerichtenlijst()
     {
         return berichtenlijst;
     }

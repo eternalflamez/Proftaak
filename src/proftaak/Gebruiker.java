@@ -24,6 +24,7 @@ public class Gebruiker {
         this.naam = naam;
         highScore = 0;
         rating = 15;
+        ratingLijst.add(rating);
     }
     
     public String getNaam()
@@ -49,13 +50,13 @@ public class Gebruiker {
         }
     }
     
-    public void berekenRating(double nieuwScore){
+    public void berekenRating(double nieuwRating){
         
         if (ratingLijst.size() > 4)
         {
             ratingLijst.remove(4);
         }
-        ratingLijst.add(0, nieuwScore);
+        ratingLijst.add(0, nieuwRating);
         
         rating = 0;
         
