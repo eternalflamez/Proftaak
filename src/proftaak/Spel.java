@@ -65,7 +65,7 @@ public class Spel extends Observable {
         int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
         int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
 
-        this.direction = new Point2D(getRandom(-10, 10), getRandom(-20, 20));
+        this.direction = new Point2D(getRandom(-10, 10), getRandom(-10, 10));
         this.colors.add(Color.BLUE);
         this.colors.add(Color.GREEN);
         this.puck = new Puck(new Point2D(500, 500), 40, new Point2D(richtingX, richtingY));
