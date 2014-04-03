@@ -55,7 +55,7 @@ public class Spel extends Observable {
         moeilijkheidsgraad = host.getRating();
         
         // TODO: Actually give the correct point.
-        Speler Player1 = new Speler(host.getNaam(), host.getScore(), Color.RED, new Point2D(0, 0));
+        Speler Player1 = new Speler(host.getNaam(), host.getScore(), Color.RED, new Point2D(500, 950));
         this.spelers.add(Player1);
         gebruikers.add(host);
         
@@ -116,7 +116,7 @@ public class Spel extends Observable {
      */
     public void tekenVeld()
     {
-        // TODO: Zet batjes en het balletje op de juiste positie, deel de juiste kleuren uit, etc.
+        
     }
     
     /**

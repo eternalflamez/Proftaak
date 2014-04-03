@@ -80,15 +80,20 @@ public class Proftaak extends Application {
         
         Rectangle leftBottom = new Rectangle(-80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
         leftBottom.setRotate(-60);
-        
+        Rectangle leftTop = new Rectangle(270, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        leftTop.setRotate(-60);
         
         Rectangle rightBottom = new Rectangle(screenHeight - 80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
         rightBottom.setRotate(60);
+        Rectangle rightTop = new Rectangle(430, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        rightTop.setRotate(60);
         
         shapes.add(bottomLeft);
         shapes.add(bottomRight);
         shapes.add(leftBottom);
+        shapes.add(leftTop);
         shapes.add(rightBottom);
+        shapes.add(rightTop);
         
         addShapesToPane(root, shapes);
         
