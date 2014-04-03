@@ -151,6 +151,15 @@ public class Spel extends Observable {
         {
             Node shapeCopy = nodes.get(i);
             root.getChildren().add(shapeCopy);
+            
+            if(shapeCopy.getClass().equals(new Rectangle().getClass()))
+            {
+                if(this.puck.botstMet((Rectangle)shapeCopy))
+                {
+                    System.out.println("Bosting!");
+                    direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+                }
+            }
         }
         
         stage.setScene(scene);

@@ -41,6 +41,7 @@ public class Proftaak extends Application {
         lobby.login("asd", "asad");
         Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
         spel.startSpel(primaryStage);
+        
         /*
         Button btn = new Button();
         btn.setText("Start spel");
