@@ -14,9 +14,9 @@ import javafx.scene.paint.Color;
  * @author Sander
  */
 public class Human extends Speler {
-    public Human(String naam, int rating, Color kleur, Point2D batLokatie)
+    public Human(String naam, int rating, Color kleur, Point2D batLokatie, int hoek)
     {
-       super(naam, rating, kleur, batLokatie);
+       super(naam, rating, kleur, batLokatie, hoek);
     }
     
     public void beweeg()

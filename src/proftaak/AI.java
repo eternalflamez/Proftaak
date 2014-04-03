@@ -14,9 +14,9 @@ import javafx.scene.paint.Color;
  * @author Sander
  */
 public class AI extends Speler {
-    public AI(String naam, int rating, Color kleur, Point2D batLokatie)
+    public AI(String naam, int rating, Color kleur, Point2D batLokatie, int hoek)
     {
-        super(naam, rating, kleur, batLokatie);
+        super(naam, rating, kleur, batLokatie, hoek);
     }
     
     public void beweeg(int snelheid, float grootte, float richting)

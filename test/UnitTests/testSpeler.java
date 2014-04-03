@@ -37,9 +37,9 @@ public class testSpeler {
     
     @Before
     public void setUp() {
-        speler1 = new Speler("Kees", 20.1, Color.RED, new Point2D(0, 0));
+        speler1 = new Speler("Kees", 20.1, Color.RED, new Point2D(0, 0), 60);
         
-        speler2 = new Speler("Piet", 1323.6, Color.BLUE, new Point2D(0, 0));
+        speler2 = new Speler("Piet", 1323.6, Color.BLUE, new Point2D(0, 0), -60);
     }
     
     @After

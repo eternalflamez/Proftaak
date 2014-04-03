@@ -20,14 +20,16 @@ public class Speler {
     private String naam;
     private int score;
     private double rating;
+    private int hoek;
   
     private final Bat bat;
     
-    public Speler(String naam, double rating, Color kleur, Point2D batLokatie)
+    public Speler(String naam, double rating, Color kleur, Point2D batLokatie, int Hoek)
     {
         this.rating = rating;
         this.bat = new Bat(kleur, batLokatie);
         this.naam = naam;
+        this.hoek = Hoek;
     }
     
     public void addScore(){
