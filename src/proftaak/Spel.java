@@ -41,6 +41,9 @@ public class Spel extends Observable {
     private AnimationTimer timer;
     private Point2D direction;
     
+    private int richting; // wordt gebruikt bij het bewegen van de bat.
+    private List<Human> humanSpelers;
+    
      // List of constants.
     // Wortel van 750.000 = hoogte van het scherm voor het geval dat Zijde A = Zijde B = Zijde C = 1000.
     int screenHeight = (int)Math.sqrt(750000);
@@ -61,6 +64,7 @@ public class Spel extends Observable {
         colors = new ArrayList();
         spelers = new ArrayList();
         gebruikers = new ArrayList();
+        humanSpelers = new ArrayList();
         
         int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
         int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
@@ -75,17 +79,16 @@ public class Spel extends Observable {
         
         moeilijkheidsgraad = host.getRating();
         
-        Speler Player1 = new Speler(host.getNaam(), host.getRating(), Color.RED, new Point2D(500, 950), 0);
-        this.spelers.add(Player1);
+        Human Player1 = new Human(host.getNaam(), host.getRating(), Color.RED, new Point2D(500, 950), 0);
+        this.humanSpelers.add(Player1);
         gebruikers.add(host);
         
         if(!publicGame)
         {
-            for(int i = 0; i < 2; i++)
-            {
                 // TODO: Test point position
-                this.spelers.add(new AI("Bot " + i, 0, colors.get(spelers.size() - 1), new Point2D(350 * i, 550), -180 + 120 * i));
-            }
+           this.spelers.add(new AI("Bot " + 0, 0, colors.get(spelers.size()), new Point2D(280, 500), -60));
+           this.spelers.add(new AI("Bot " + 1, 0, colors.get(spelers.size()), new Point2D(720, 450), 60));
+     
         }
     }
     
@@ -144,6 +147,21 @@ public class Spel extends Observable {
         
         Circle puck = this.puck.getShape();
         root.getChildren().add(puck);
+        
+        
+        for(Human h: humanSpelers)
+        {
+            h.beweeg(richting);
+            Rectangle bat = h.getBat().getRect();
+            root.getChildren().add(bat);
+        }
+//         Bat's tekenen van alle spelers
+        for(Speler s: spelers)
+        {
+            Rectangle bat = s.getBat().getRect();
+            root.getChildren().add(bat);
+        }
+        
         
         List<Node> nodes = stage.getScene().getRoot().getChildrenUnmodifiable();
         
@@ -303,5 +321,14 @@ public class Spel extends Observable {
     public double getMoeilijkheidsgraad()
     {
         return moeilijkheidsgraad;
+    }
+    
+    
+    public void setRichting(int richting)
+    {
+        if(richting == 0 || richting == -1 ||richting == 1)
+        {
+            this.richting = richting;
+        }
     }
 }

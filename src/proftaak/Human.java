@@ -14,13 +14,15 @@ import javafx.scene.paint.Color;
  * @author Sander
  */
 public class Human extends Speler {
-    public Human(String naam, int rating, Color kleur, Point2D batLokatie, int hoek)
+    public Human(String naam, double rating, Color kleur, Point2D batLokatie, int hoek)
     {
        super(naam, rating, kleur, batLokatie, hoek);
     }
     
-    public void beweeg()
+    public void beweeg(int richting)
     {
         // Todo, get keyinput en beweeg
+        this.getBat().beweeg(richting);
+        
     }
 }

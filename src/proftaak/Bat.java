@@ -25,18 +25,26 @@ public class Bat {
     private Rectangle rect;
     private double richting;
 
-    public Bat(Color kleur, Point2D positie) {
+    public Bat(Color kleur, Point2D positie, double hoek) {
         
         this.kleur = kleur;
         this.positie = positie;
-
+        this.richting = hoek;
+        
+        this.rect =  new Rectangle(100,25,kleur);
+        
+        rect.getTransforms().add(new Rotate(richting));
+        rect.setLayoutX(positie.getX());
+        rect.setLayoutY(positie.getY());
     }
     
     
     public void beweeg(int beweging)
     {
-        positie = new Point2D(positie.getX() + beweging, positie.getY() + beweging);
+        positie = new Point2D(positie.getX() + beweging, positie.getY());
 
+        rect.setLayoutX(positie.getX());
+        rect.setLayoutY(positie.getY());
     }
 
     public void AddRect(Group group) {
@@ -53,5 +61,10 @@ public class Bat {
         group.getChildren().add(rect);
         
         
+    }
+    
+    public Rectangle getRect()
+    {
+        return rect;
     }
 }
