@@ -52,7 +52,7 @@ public class Lobby implements Observer{
      * @param naam De naam van het spel.
      * @param publicGame Openbaar of privé.
      */
-    public void voegSpelToe(String naam, Boolean publicGame)
+    public Spel voegSpelToe(String naam, Boolean publicGame)
     {
         Spel nieuwSpel;
         if(spellen.size() > 0)
@@ -65,6 +65,8 @@ public class Lobby implements Observer{
         }
         nieuwSpel.addObserver(this);
         spellen.add(nieuwSpel);
+        
+        return nieuwSpel;
     }
     
     /**

@@ -27,6 +27,16 @@ public class Proftaak extends Application {
     
     @Override
     public void start(final Stage primaryStage) {
+        // TODO: Login scherm
+        // TODO: Lobby scherm
+        toonLogin(primaryStage);
+        toonLobby(primaryStage);
+        
+        Lobby lobby = new Lobby();
+        Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
+        spel.startSpel(primaryStage);
+        
+        /*
         Button btn = new Button();
         btn.setText("Start spel");
         btn.setOnAction(new EventHandler<ActionEvent>() 
@@ -45,6 +55,18 @@ public class Proftaak extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        */
+        
+    }
+    
+    private void toonLogin(Stage primaryStage)
+    {
+        
+    }
+    
+    private void toonLobby(Stage primaryStage)
+    {
+        
     }
     
     private void toonSpel(Stage primaryStage)

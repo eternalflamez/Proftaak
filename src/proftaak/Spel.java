@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Observable;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  *
@@ -54,8 +55,7 @@ public class Spel extends Observable {
         
         moeilijkheidsgraad = host.getRating();
         
-        // TODO: Actually give the correct point.
-        Speler Player1 = new Speler(host.getNaam(), host.getScore(), Color.RED, new Point2D(500, 950));
+        Speler Player1 = new Speler(host.getNaam(), host.getScore(), Color.RED, new Point2D(500, 950), 0);
         this.spelers.add(Player1);
         gebruikers.add(host);
         
@@ -63,8 +63,8 @@ public class Spel extends Observable {
         {
             for(int i = 0; i < 2; i++)
             {
-                // TODO: actually give correct points
-                this.spelers.add(new AI("Bot " + i, 0, colors.get(spelers.size() - 1), new Point2D(0, 0)));
+                // TODO: Test point position
+                this.spelers.add(new AI("Bot " + i, 0, colors.get(spelers.size() - 1), new Point2D(350 * i, 550), -180 + 120 * i));
             }
         }
     }
@@ -102,21 +102,13 @@ public class Spel extends Observable {
      */
     public void voegGebruikerToe(Gebruiker g)
     {
-        // TODO: Actually give correct point
-        Speler speler = new Speler(g.getNaam(), g.getRating(), colors.get(spelers.size() - 1), new Point2D(0, 0));
+        // TODO: Actually give correct point and angle
+        Speler speler = new Speler(g.getNaam(), g.getRating(), colors.get(spelers.size() - 1), new Point2D(0, 0), 60);
         spelers.add(speler);
         gebruikers.add(g);
         
         // Trekt nieuw gemiddelde rating van de spelers.
         moeilijkheidsgraad = (moeilijkheidsgraad * spelers.size() + g.getRating()) / (spelers.size() + 1);
-    }
-    
-    /**
-     * Draws the field, including bats, the ball, and the walls at starting position.
-     */
-    public void tekenVeld()
-    {
-        
     }
     
     /**
@@ -130,9 +122,10 @@ public class Spel extends Observable {
     /**
      * Starts the game.
      */
-    public void startSpel()
+    public void startSpel(Stage stage)
     {
         // TODO: Timer voor updateVeld
+        
     }
     
     /**
