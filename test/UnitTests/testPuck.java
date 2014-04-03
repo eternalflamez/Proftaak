@@ -6,19 +6,23 @@
 
 package UnitTests;
 
+import javafx.geometry.Point2D;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import proftaak.Puck;
 
 /**
  *
  * @author Stephan
  */
 public class testPuck {
-    
+    int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
+    int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
+    Puck puck1 = new Puck(new Point2D(50, 50), 10, new Point2D(richtingX, richtingY));
     public testPuck() {
     }
     
