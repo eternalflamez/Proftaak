@@ -11,10 +11,15 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -30,7 +35,7 @@ public class Proftaak extends Application {
         // TODO: Login scherm
         // TODO: Lobby scherm
         toonLogin(primaryStage);
-        toonLobby(primaryStage);
+        //toonLobby(primaryStage);
         
         Lobby lobby = new Lobby();
         lobby.login("asd", "asad");
@@ -60,14 +65,72 @@ public class Proftaak extends Application {
         
     }
     
-    private void toonLogin(Stage primaryStage)
+    private void toonLogin(final Stage primaryStage)
     {
+        final Lobby lobby = new Lobby();
+        final TextField tfLoginName = new TextField();
+        final TextField tfLoginPassword = new TextField();
+        final Label lbLoginError = new Label();
+        Button btLogin = new Button();
+        StackPane root = new StackPane();
         
+        tfLoginName.setTranslateY(-50);
+        tfLoginName.setTranslateX(-50);
+        tfLoginName.setMaxWidth(150);
+        root.getChildren().add(tfLoginName);
+        
+        tfLoginPassword.setTranslateY(0);
+        tfLoginPassword.setTranslateX(-50);
+        tfLoginPassword.setMaxWidth(150);
+        root.getChildren().add(tfLoginPassword);
+        
+        btLogin.setTranslateY(50);
+        btLogin.setTranslateX(0);
+        btLogin.setText("Login");
+        root.getChildren().add(btLogin);
+        
+        lbLoginError.setTranslateX(-50);
+        lbLoginError.setTranslateY(75);
+        lbLoginError.setTextFill(Color.RED);
+        lbLoginError.setText("Ongeldige login gegevens");
+        lbLoginError.setVisible(false);
+        root.getChildren().add(lbLoginError);
+        
+        btLogin.setOnAction(new EventHandler<ActionEvent>() 
+        {            
+            @Override
+            public void handle(ActionEvent event) {
+                if(tfLoginName.getText().trim().length() > 0 && tfLoginPassword.getText().trim().length() > 0)
+                {
+                    primaryStage.close();
+                    try {
+                        toonLobby(primaryStage, lobby);
+                    } catch (Exception ex) {
+                        
+                    }
+                }
+                else
+                {
+                    lbLoginError.setVisible(true);
+                }
+            }
+        });
+
+        Scene scene = new Scene(root, 300, 250);
+        primaryStage.setTitle("Login");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
     
-    private void toonLobby(Stage primaryStage)
+    private void toonLobby(Stage primaryStage, Lobby lobby) throws Exception
     {
+        Parent root = FXMLLoader.load(getClass().getResource("LobbyGUI.fxml"));
         
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
+        //spel.startSpel(primaryStage);
     }
 
     /**
