@@ -8,6 +8,7 @@ package proftaak;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,7 +30,6 @@ import javafx.stage.Stage;
  * @author Sander
  */
 public class Proftaak extends Application {
-    
     @Override
     public void start(final Stage primaryStage) {
         // TODO: Login scherm
@@ -41,7 +41,6 @@ public class Proftaak extends Application {
         lobby.login("asd", "asad");
         Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
         spel.startSpel(primaryStage);
-        
         /*
         Button btn = new Button();
         btn.setText("Start spel");

@@ -9,6 +9,8 @@ package proftaak;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -18,7 +20,7 @@ public class Puck {
     private float grootte;
     private Point2D richting;
     private Point2D positie;
-    private Ellipse2D shape;
+    private Circle shape;
     
     public Puck(Point2D positie, float grootte, Point2D richting)
     {
@@ -26,21 +28,27 @@ public class Puck {
         this.richting = richting;
         this.positie = positie;
         
-        shape = new Ellipse2D.Double(positie.getX(), positie.getY(), grootte, grootte);
+        shape = new Circle();
+        
+        shape.setCenterX(500);
+        shape.setCenterY(500);
+        shape.setRadius(20);
     }
     
     public void beweegPuck(Point2D richting)
     {
         positie = new Point2D(positie.getX() + richting.getX(), positie.getY() + richting.getY());
-        shape.setFrame(positie.getX(), positie.getY(), grootte, grootte);
+
+        shape.setCenterX(positie.getX());
+        shape.setCenterY(positie.getY());
     }
     
-    public Boolean botstMet(Rectangle2D other)
+    public Boolean botstMet(Rectangle other)
     {
-        return shape.intersects(other);
+        return shape.intersects(other.xProperty().doubleValue(), other.yProperty().doubleValue(), other.widthProperty().doubleValue(), other.heightProperty().doubleValue());
     }
     
-    public Ellipse2D getShape()
+    public Circle getShape()
     {
         return shape;
     }

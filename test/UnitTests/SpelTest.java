@@ -48,7 +48,7 @@ public class SpelTest {
     public void Constructor()
     {
         assertEquals("Spel 1", spel.getNaam());
-        assertEquals(host.getRating(), spel.getSpelers().get(0).getRating(),0.1);
+        assertEquals(host.getRating(), spel.getSpelers().get(0).getRating(), 0.001);
         assertEquals(host.getNaam(), spel.getSpelers().get(0).getNaam());
         assertEquals(3, spel.getSpelers().size());
         assertEquals(15.0, spel.getMoeilijkheidsgraad(),0.001);
