@@ -13,7 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import javafx.geometry.Point2D;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -55,7 +59,7 @@ public class Spel extends Observable {
         
         moeilijkheidsgraad = host.getRating();
         
-        Speler Player1 = new Speler(host.getNaam(), host.getScore(), Color.RED, new Point2D(500, 950), 0);
+        Speler Player1 = new Speler(host.getNaam(), host.getRating(), Color.RED, new Point2D(500, 950), 0);
         this.spelers.add(Player1);
         gebruikers.add(host);
         
@@ -114,7 +118,7 @@ public class Spel extends Observable {
     /**
      * Updates the objects in the field to their new positions.
      */
-    public void updateVeld()
+    public void updateVeld(Stage stage)
     {
         // TODO: Neem user input en beweeg de speler(s), en beweeg de bal
     }
@@ -125,7 +129,59 @@ public class Spel extends Observable {
     public void startSpel(Stage stage)
     {
         // TODO: Timer voor updateVeld
+        // List of constants.
+        // Wortel van 750.000 = hoogte van het scherm voor het geval dat Zijde A = Zijde B = Zijde C = 1000.
+        int screenHeight = (int)Math.sqrt(750000);
+        int sideWidth = 1000;
+        int sideHeight = 20;
+        double openingSize = 0.4;
+        double wallWidth = sideWidth * ((1 - openingSize) / 2); // == sideWidth (1000) * 0.3 if openingSize == 0.4
         
+        /* Complete rectangle
+        Rectangle bottom = new Rectangle(0, Math.sqrt(750000) - 20, 1000, 20);
+        Rectangle left = new Rectangle(-250, (Math.sqrt(750000)) / 2, 1000, 20);
+        left.setRotate(-60);
+        Rectangle right = new Rectangle(250, (Math.sqrt(750000)) / 2, 1000, 20);
+        right.setRotate(60);
+        
+        Pane root = new Pane();
+        root.getChildren().add(bottom);
+        root.getChildren().add(left);
+        root.getChildren().add(right);
+        */
+        
+        List<Shape> shapes = new ArrayList();
+        
+        Pane root = new Pane();
+        Scene scene = new Scene(root, sideWidth, screenHeight);
+        
+        Rectangle bottomLeft = new Rectangle(0, screenHeight - sideHeight, wallWidth, sideHeight);
+        Rectangle bottomRight = new Rectangle(sideWidth - wallWidth, screenHeight - sideHeight, wallWidth, sideHeight);
+        
+        Rectangle leftBottom = new Rectangle(-80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
+        leftBottom.setRotate(-60);
+        Rectangle leftTop = new Rectangle(270, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        leftTop.setRotate(-60);
+        
+        Rectangle rightBottom = new Rectangle(screenHeight - 80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
+        rightBottom.setRotate(60);
+        Rectangle rightTop = new Rectangle(430, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        rightTop.setRotate(60);
+        
+        shapes.add(bottomLeft);
+        shapes.add(bottomRight);
+        shapes.add(leftBottom);
+        shapes.add(leftTop);
+        shapes.add(rightBottom);
+        shapes.add(rightTop);
+        
+        for(Shape shape : shapes)
+        {
+            root.getChildren().add(shape);
+        }
+        
+        stage.setScene(scene);
+        stage.show();
     }
     
     /**
