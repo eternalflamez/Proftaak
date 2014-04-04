@@ -8,12 +8,14 @@ package proftaak;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -37,10 +39,21 @@ public class LobbyGUIController implements Initializable {
     private TextField tfBericht;
     @FXML
     private Button btPlaatsBericht;
-
+    
+    Lobby lobby;
+    
+    public LobbyGUIController(Lobby lobby)
+    {
+        this.lobby = lobby;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
+    }
     
+    public void btStartGame(Event evt) {
+        Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
+        spel.startSpel(new Stage());
+    }
 }
