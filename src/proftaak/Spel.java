@@ -47,9 +47,9 @@ public class Spel extends Observable {
     
      // List of constants.
     // Wortel van 750.000 = hoogte van het scherm voor het geval dat Zijde A = Zijde B = Zijde C = 1000.
-    int screenHeight = (int)Math.sqrt(750000);
-    int sideWidth = 1000;
-    int sideHeight = 20;
+    int screenHeight = (int)Math.sqrt(187500); // a2 + b2 = c2, 62500 + ? = 250000
+    int sideWidth = 500;
+    int sideHeight = 10;
     double openingSize = 0.4;
     double wallWidth = sideWidth * ((1 - openingSize) / 2); // == sideWidth (1000) * 0.3 if openingSize == 0.4
     
@@ -68,13 +68,10 @@ public class Spel extends Observable {
         humanSpelers = new ArrayList();
         aiSpelers = new ArrayList();
         
-        int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
-        int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
-
         this.direction = new Point2D(getRandom(-10, 10), getRandom(-10, 10));
         this.colors.add(Color.BLUE);
         this.colors.add(Color.GREEN);
-        this.puck = new Puck(new Point2D(500, 500), 40, new Point2D(richtingX, richtingY));
+        this.puck = new Puck(new Point2D(250, 250), 10, direction);
         this.naam = naam;
         this.id = id;
         this.chatbox = new Chatbox();
@@ -198,14 +195,14 @@ public class Spel extends Observable {
         Rectangle bottomLeft = new Rectangle(0, screenHeight - sideHeight, wallWidth, sideHeight);
         Rectangle bottomRight = new Rectangle(sideWidth - wallWidth, screenHeight - sideHeight, wallWidth, sideHeight);
         
-        Rectangle leftBottom = new Rectangle(-80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
+        Rectangle leftBottom = new Rectangle(-40, Math.sqrt(187500) * 0.85, wallWidth, sideHeight);
         leftBottom.setRotate(-60);
-        Rectangle leftTop = new Rectangle(270, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        Rectangle leftTop = new Rectangle(135, Math.sqrt(187500) * 0.15, wallWidth, sideHeight);
         leftTop.setRotate(-60);
         
-        Rectangle rightBottom = new Rectangle(screenHeight - 80, Math.sqrt(750000) * 0.85, wallWidth, sideHeight);
+        Rectangle rightBottom = new Rectangle(screenHeight - 40, Math.sqrt(187500) * 0.85, wallWidth, sideHeight);
         rightBottom.setRotate(60);
-        Rectangle rightTop = new Rectangle(430, Math.sqrt(750000) * 0.15, wallWidth, sideHeight);
+        Rectangle rightTop = new Rectangle(215, Math.sqrt(187500) * 0.15, wallWidth, sideHeight);
         rightTop.setRotate(60);
         
         shapes.add(bottomLeft);
