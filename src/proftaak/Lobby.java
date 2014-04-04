@@ -47,6 +47,11 @@ public class Lobby implements Observer{
         return Collections.unmodifiableList(gebruikers);
     }
     
+    public List<Bericht> getChatBerichten()
+    {
+        return chatbox.getBerichtenlijst();
+    }
+    
     /**
      * Voeg spel toe aan de lobby.
      * @param naam De naam van het spel.
@@ -57,7 +62,7 @@ public class Lobby implements Observer{
         Spel nieuwSpel;
         if(spellen.size() > 0)
         {
-            nieuwSpel = new Spel(naam, gebruiker, publicGame, spellen.get(spellen.size()).getId()+1);
+            nieuwSpel = new Spel(naam, gebruiker, publicGame, spellen.get(spellen.size()-1).getId()+1);
         }
         else
         {

@@ -34,7 +34,7 @@
                     <ListView fx:id="lvGebruikersInLobby" layoutX="190.0" layoutY="0.0" prefHeight="252.0" prefWidth="101.0" />
                     <TextArea id="tfChatbox" fx:id="taChatbox" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="251.99990000000253" prefWidth="191.0" wrapText="true" />
                     <TextField fx:id="tfBericht" layoutX="0.0" layoutY="252.0" prefWidth="254.0" />
-                    <Button fx:id="btPlaatsBericht" layoutX="254.0" layoutY="252.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="37.0" text="OK" />
+                    <Button fx:id="btPlaatsBericht" layoutX="254.0" layoutY="252.0" mnemonicParsing="false" onAction="#btPlaatsBericht" prefHeight="23.0" prefWidth="37.0" text="OK" />
                   </children>
                 </AnchorPane>
               </items>

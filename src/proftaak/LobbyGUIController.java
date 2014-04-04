@@ -56,4 +56,12 @@ public class LobbyGUIController implements Initializable {
         Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
         spel.startSpel(new Stage());
     }
+    
+    public void btPlaatsBericht(Event evt) {
+        lobby.stuurBericht(tfBericht.getText());
+        Bericht b = lobby.getChatBerichten().get(lobby.getChatBerichten().size()-1);
+        StringBuilder sb = new StringBuilder();
+        sb.append(b.getGebruiker().getNaam()).append(": ").append(b.getBericht()).append("\n");
+        taChatbox.appendText(sb.toString());
+    }
 }
