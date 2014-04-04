@@ -77,15 +77,15 @@ public class Spel extends Observable {
         this.chatbox = new Chatbox();
         moeilijkheidsgraad = host.getRating();
         
-        Human Player1 = new Human(host.getNaam(), host.getRating(), Color.RED, new Point2D(500, 950), 0);
+        Human Player1 = new Human(host.getNaam(), host.getRating(), Color.RED, new Point2D(250, 405), 0);
         this.humanSpelers.add(Player1);
         gebruikers.add(host);
         
         if(!publicGame)
         {
               // TODO: Test point position
-           this.aiSpelers.add(new AI("Bot " + 0, 0, /**colors.get(aiSpelers.size())**/ Color.GREEN, new Point2D(280, 500), -60));
-           this.aiSpelers.add(new AI("Bot " + 1, 0,Color.BLUE, new Point2D(720, 450), 60));
+           this.aiSpelers.add(new AI("Bot " + 0, 0, /**colors.get(aiSpelers.size())**/ Color.GREEN, new Point2D(120, 250), -60));
+           this.aiSpelers.add(new AI("Bot " + 1, 0,Color.BLUE, new Point2D(360, 225), 60));
         }
     }
     

@@ -31,7 +31,7 @@ public class Bat {
         this.positie = positie;
         this.richting = hoek;
         
-        this.rect =  new Rectangle(100,25,kleur);
+        this.rect =  new Rectangle(40,10,kleur);
         
         rect.getTransforms().add(new Rotate(richting));
         rect.setLayoutX(positie.getX());
@@ -53,22 +53,22 @@ public class Bat {
         rect.setLayoutX(positie.getX());
         rect.setLayoutY(positie.getY());
     }
-
-    public void AddRect(Group group) {
-
-        if (rect != null) {
-            group.getChildren().remove(rect);
-        }
-        
-        rect = new Rectangle(100, 25, kleur);
-        rect.getTransforms().add(new Rotate(richting));
-        rect.setLayoutX(positie.getX());
-        rect.setLayoutY(positie.getY());
-
-        group.getChildren().add(rect);
-        
-        
-    }
+//
+//    public void AddRect(Group group) {
+//
+//        if (rect != null) {
+//            group.getChildren().remove(rect);
+//        }
+//        
+//        rect = new Rectangle(40, 10, kleur);
+//        rect.getTransforms().add(new Rotate(richting));
+//        rect.setLayoutX(positie.getX());
+//        rect.setLayoutY(positie.getY());
+//
+//        group.getChildren().add(rect);
+//        
+//        
+//    }
     
     public Rectangle getRect()
     {
