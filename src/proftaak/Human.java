@@ -19,7 +19,7 @@ public class Human extends Speler {
        super(naam, rating, kleur, batLokatie, hoek);
     }
     
-    public void beweeg(int richting)
+    public void beweeg(double richting)
     {
         // Todo, get keyinput en beweeg
         this.getBat().beweeg(richting);

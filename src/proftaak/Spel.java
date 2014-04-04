@@ -85,7 +85,7 @@ public class Spel extends Observable {
         {
               // TODO: Test point position
            this.aiSpelers.add(new AI("Bot " + 0, 0, /**colors.get(aiSpelers.size())**/ Color.GREEN, new Point2D(120, 250), -60));
-           this.aiSpelers.add(new AI("Bot " + 1, 0,Color.BLUE, new Point2D(360, 225), 60));
+           this.aiSpelers.add(new AI("Bot " + 1, 0,Color.BLUE, new Point2D(360, 225), -120));
         }
     }
     
@@ -153,13 +153,15 @@ public class Spel extends Observable {
             root.getChildren().add(bat);
         }
 //         Bat's tekenen van alle spelers
-        for(AI s: aiSpelers)
-        {
-            s.beweeg(1, puck.getCenterY());
-            Rectangle bat = s.getBat().getRect();
-            root.getChildren().add(bat);
-        }
-        
+        AI ai1 = aiSpelers.get(0);
+            ai1.beweeg(-1, 1.5, puck.getCenterY());
+            Rectangle aiBat1 = ai1.getBat().getRect();
+            root.getChildren().add(aiBat1);
+            
+           AI ai2 = aiSpelers.get(1);
+            ai2.beweeg(1, 1.5, puck.getCenterY());
+            Rectangle aiBat2 = ai2.getBat().getRect();
+            root.getChildren().add(aiBat2);
         
         List<Node> nodes = stage.getScene().getRoot().getChildrenUnmodifiable();
         

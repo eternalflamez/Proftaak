@@ -19,15 +19,18 @@ public class AI extends Speler {
         super(naam, rating, kleur, batLokatie, hoek);
     }
     
-    public void beweeg(int snelheid, double puckY)
+       public void beweeg(double snelheidX, double snelheidY, double puckY)
     {
-        if(puckY > this.getBat().getPositie().getY())
-        {
-            this.getBat().beweegSchuin(snelheid);
-        }
-        else if(puckY<this.getBat().getPositie().getY())
-        {
-            this.getBat().beweegSchuin(-snelheid);
+        double y = this.getBat().getPositie().getY();
+        if( y<310 && y>170){
+            if(puckY > this.getBat().getPositie().getY())
+            {
+                this.getBat().beweegSchuin(snelheidX, snelheidY);
+            }
+            else if(puckY<this.getBat().getPositie().getY())
+            {
+                this.getBat().beweegSchuin(-snelheidX, -snelheidY);
+            }
         }
     }
 }
