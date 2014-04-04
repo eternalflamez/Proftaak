@@ -46,6 +46,13 @@ public class Bat {
         rect.setLayoutX(positie.getX());
         rect.setLayoutY(positie.getY());
     }
+    public void beweegSchuin(int beweging)
+    {
+        positie = new Point2D(positie.getX() + beweging, positie.getY() + beweging);
+
+        rect.setLayoutX(positie.getX());
+        rect.setLayoutY(positie.getY());
+    }
 
     public void AddRect(Group group) {
 
@@ -66,5 +73,10 @@ public class Bat {
     public Rectangle getRect()
     {
         return rect;
+    }
+    
+    public Point2D getPositie()
+    {
+        return positie;
     }
 }

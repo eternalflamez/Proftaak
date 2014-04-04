@@ -34,7 +34,7 @@ public class Spel extends Observable {
     private int id;
     private double moeilijkheidsgraad;
     private Puck puck;
-    private List<Speler> spelers;
+    //private List<Speler> spelers;
     private List<Gebruiker> gebruikers;
     private Chatbox chatbox;
     private List<Color> colors;
@@ -43,6 +43,7 @@ public class Spel extends Observable {
     
     private int richting; // wordt gebruikt bij het bewegen van de bat.
     private List<Human> humanSpelers;
+    private List<AI> aiSpelers;
     
      // List of constants.
     // Wortel van 750.000 = hoogte van het scherm voor het geval dat Zijde A = Zijde B = Zijde C = 1000.
@@ -62,9 +63,10 @@ public class Spel extends Observable {
     public Spel(String naam, Gebruiker host, Boolean publicGame, int id)
     {
         colors = new ArrayList();
-        spelers = new ArrayList();
+        //spelers = new ArrayList();
         gebruikers = new ArrayList();
         humanSpelers = new ArrayList();
+        aiSpelers = new ArrayList();
         
         int richtingX = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
         int richtingY = 5 + (int)(Math.random() * ((12 - 5) + 1)); // punt tussen 5 en 12
@@ -76,7 +78,6 @@ public class Spel extends Observable {
         this.naam = naam;
         this.id = id;
         this.chatbox = new Chatbox();
-        
         moeilijkheidsgraad = host.getRating();
         
         Human Player1 = new Human(host.getNaam(), host.getRating(), Color.RED, new Point2D(500, 950), 0);
@@ -85,10 +86,9 @@ public class Spel extends Observable {
         
         if(!publicGame)
         {
-                // TODO: Test point position
-           this.spelers.add(new AI("Bot " + 0, 0, colors.get(spelers.size()), new Point2D(280, 500), -60));
-           this.spelers.add(new AI("Bot " + 1, 0, colors.get(spelers.size()), new Point2D(720, 450), 60));
-     
+              // TODO: Test point position
+           this.aiSpelers.add(new AI("Bot " + 0, 0, /**colors.get(aiSpelers.size())**/ Color.GREEN, new Point2D(280, 500), -60));
+           this.aiSpelers.add(new AI("Bot " + 1, 0,Color.BLUE, new Point2D(720, 450), 60));
         }
     }
     
@@ -105,9 +105,9 @@ public class Spel extends Observable {
      * Gets the players of the game.
      * @return An unmodifiable list of players of this game.
      */
-    public List<Speler> getSpelers()
+    public List<Human> getSpelers()
     {
-        return Collections.unmodifiableList(spelers);
+        return Collections.unmodifiableList(humanSpelers);
     }
     
     /**
@@ -126,12 +126,12 @@ public class Spel extends Observable {
     public void voegGebruikerToe(Gebruiker g)
     {
         // TODO: Actually give correct point and angle
-        Speler speler = new Speler(g.getNaam(), g.getRating(), colors.get(spelers.size() - 1), new Point2D(0, 0), 60);
-        spelers.add(speler);
+        Human speler = new Human(g.getNaam(), g.getRating(), colors.get(humanSpelers.size() - 1), new Point2D(0, 0), 60);
+        humanSpelers.add(speler);
         gebruikers.add(g);
         
         // Trekt nieuw gemiddelde rating van de spelers.
-        moeilijkheidsgraad = (moeilijkheidsgraad * spelers.size() + g.getRating()) / (spelers.size() + 1);
+        moeilijkheidsgraad = (moeilijkheidsgraad * humanSpelers.size() + g.getRating()) / (humanSpelers.size() + 1);
     }
     
     /**
@@ -156,8 +156,9 @@ public class Spel extends Observable {
             root.getChildren().add(bat);
         }
 //         Bat's tekenen van alle spelers
-        for(Speler s: spelers)
+        for(AI s: aiSpelers)
         {
+            s.beweeg(1, puck.getCenterY());
             Rectangle bat = s.getBat().getRect();
             root.getChildren().add(bat);
         }
@@ -277,7 +278,7 @@ public class Spel extends Observable {
         int totalRating = 0;
         int counter = 0;
         
-        for(Speler speler : spelers)
+        for(Speler speler : humanSpelers)
         {
             totalRating += speler.getRating();
         }
@@ -287,7 +288,7 @@ public class Spel extends Observable {
             // Pak rating van andere spelers en telt bij elkaar op.
             double totalOthersRating = totalRating - gebruiker.getRating();
             double points = (totalOthersRating - 2 * gebruiker.getRating()) / 8;
-            int score = spelers.get(counter).getScore();
+            int score = humanSpelers.get(counter).getScore();
             
             gebruiker.berekenRating(points + score);
             
