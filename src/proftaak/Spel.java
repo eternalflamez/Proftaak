@@ -68,7 +68,7 @@ public class Spel extends Observable {
         humanSpelers = new ArrayList();
         aiSpelers = new ArrayList();
         
-        this.direction = new Point2D(getRandom(-10, 10), getRandom(-10, 10));
+        this.direction = new Point2D(getRandom(-4, 4), getRandom(-4, 4));
         this.colors.add(Color.BLUE);
         this.colors.add(Color.GREEN);
         this.puck = new Puck(new Point2D(250, 250), 10, direction);
@@ -145,7 +145,6 @@ public class Spel extends Observable {
         Circle puck = this.puck.getShape();
         root.getChildren().add(puck);
         
-        
         for(Human h: humanSpelers)
         {
             h.beweeg(richting);
@@ -170,10 +169,20 @@ public class Spel extends Observable {
             
             if(shapeCopy.getClass().equals(new Rectangle().getClass()))
             {
-                if(this.puck.botstMet((Rectangle)shapeCopy))
+                Rectangle shape = (Rectangle)shapeCopy;
+                if(this.puck.botstMet(shape))
                 {
                     System.out.println("Bosting!");
-                    direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+                    
+                    if(shape.getRotate() == 0)
+                    {
+                        direction = new Point2D(direction.getX(), direction.getY() * -1);
+                        puck.setCenterY(shape.getLayoutY() - shape.getHeight() / 2);
+                    }
+                    else
+                    {
+                        direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+                    }
                 }
             }
         }
