@@ -134,7 +134,7 @@ public class Spel extends Observable {
     /**
      * Updates the objects in the field to their new positions.
      */
-    public void updateVeld(Stage stage)
+    private void updateVeld(Stage stage)
     {
         // TODO: Neem user input en beweeg de speler(s), en beweeg de bal
         Pane root = new Pane();
