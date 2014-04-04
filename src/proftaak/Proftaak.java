@@ -36,11 +36,8 @@ public class Proftaak extends Application {
         // TODO: Lobby scherm
         toonLogin(primaryStage);
         //toonLobby(primaryStage);
-        
-        Lobby lobby = new Lobby();
-        lobby.login("asd", "asad");
-        Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
-        spel.startSpel(primaryStage);
+        //Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
+        //spel.startSpel(primaryStage);
         
         /*
         Button btn = new Button();
@@ -104,6 +101,8 @@ public class Proftaak extends Application {
                 {
                     primaryStage.close();
                     try {
+                        Lobby lobby = new Lobby();
+                        lobby.login(tfLoginName.getText(), tfLoginPassword.getText());
                         toonLobby(primaryStage, lobby);
                     } catch (Exception ex) {
                         
@@ -124,13 +123,15 @@ public class Proftaak extends Application {
     
     private void toonLobby(Stage primaryStage, Lobby lobby) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("LobbyGUI.fxml"));
+        LobbyGUIController lobbyGUIController = new LobbyGUIController(lobby);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyGUI.fxml"));
+        loader.setController(lobbyGUIController);
         
+        Parent root = (Parent)loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Lobby");
         primaryStage.show();
-        //Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
-        //spel.startSpel(primaryStage);
     }
 
     /**

@@ -39,16 +39,16 @@ public class Bat {
     }
     
     
-    public void beweeg(int beweging)
+    public void beweeg(double beweging)
     {
         positie = new Point2D(positie.getX() + beweging, positie.getY());
 
         rect.setLayoutX(positie.getX());
         rect.setLayoutY(positie.getY());
     }
-    public void beweegSchuin(int beweging)
+     public void beweegSchuin(double bewegingX,double bewegingY)
     {
-        positie = new Point2D(positie.getX() + beweging, positie.getY() + beweging);
+        positie = new Point2D(positie.getX() + bewegingX, positie.getY() + bewegingY);
 
         rect.setLayoutX(positie.getX());
         rect.setLayoutY(positie.getY());
