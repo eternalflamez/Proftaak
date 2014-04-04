@@ -8,11 +8,13 @@ package proftaak;
 
 
 
+import com.sun.javafx.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import javafx.animation.AnimationTimer;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -20,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -136,7 +139,8 @@ public class Spel extends Observable {
      */
     private void updateVeld(Stage stage)
     {
-        // TODO: Neem user input en beweeg de speler(s), en beweeg de bal
+        Stage s = stage;
+        
         Pane root = new Pane();
         Scene scene = new Scene(root, sideWidth, screenHeight);
         
@@ -162,16 +166,25 @@ public class Spel extends Observable {
             Rectangle aiBat2 = ai2.getBat().getRect();
             root.getChildren().add(aiBat2);
         
-        List<Node> nodes = stage.getScene().getRoot().getChildrenUnmodifiable();
+        ObservableList<Node> nodes = s.getScene().getRoot().getChildrenUnmodifiable();
+        ArrayList<Line2D> lines = new ArrayList<Line2D>();
         
         for (int i = nodes.size() - 1; i >= 0 ; i--) 
         {
-            Node shapeCopy = nodes.get(i);
-            root.getChildren().add(shapeCopy);
+            Node original = nodes.get(i);
             
-            if(shapeCopy.getClass().equals(new Rectangle().getClass()))
+            if(original.getClass().equals(new Rectangle().getClass()))
             {
-                Rectangle shape = (Rectangle)shapeCopy;
+                Rectangle origiTangle = (Rectangle)original;
+                
+                Rectangle shadowCopy = new Rectangle(origiTangle.getX(), origiTangle.getY(), origiTangle.getWidth(), origiTangle.getHeight());
+                shadowCopy.setRotate(origiTangle.getRotate());
+                
+                root.getChildren().add(shadowCopy);
+            
+                
+                lines.addAll(this.puck.generateLines(shadowCopy));
+                Rectangle shape = shadowCopy;
                 if(this.puck.botstMet(shape))
                 {
                     System.out.println("Bosting!");
@@ -189,8 +202,15 @@ public class Spel extends Observable {
             }
         }
         
-        stage.setScene(scene);
-        stage.show();
+        for(Line2D l : lines)
+        {
+            Line line = new Line(l.x1, l.y1, l.x2, l.y2);
+            // Tekent de collisie lijnen voor debug.
+            // root.getChildren().add(line);
+        }
+        
+        s.setScene(scene);
+        s.show();
     }
     
     /**

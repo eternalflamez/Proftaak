@@ -47,6 +47,29 @@ public class Puck
 
     public Boolean botstMet(Rectangle other) 
     {
+        ArrayList<Line2D> lines = generateLines(other);
+        
+        if(lines.size() == 0)
+        {
+            return shape.intersects(other.getBoundsInLocal());
+        }
+        
+        for(Line2D line : lines)
+        {
+            com.sun.javafx.geom.Point2D circleCenter = new com.sun.javafx.geom.Point2D((float)shape.getCenterX(), (float)shape.getCenterY());
+            double distance = line.ptSegDist(circleCenter);
+
+            if(distance < radius)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public ArrayList<Line2D> generateLines(Rectangle other)
+    {
         double radians60 = Math.toRadians(other.getRotate());
         double radians30 = Math.toRadians(90 - other.getRotate());
 
@@ -57,7 +80,7 @@ public class Puck
         if(other.getRotate() == 0)
         {
             // Efficiente collision check.
-            return shape.intersects(other.getBoundsInLocal());
+            return lines;
         }
         else if(other.getRotate() > 0)
         {
@@ -77,8 +100,8 @@ public class Puck
                     (float)(other.getY() + other.getWidth() * Math.cos(radians30)));
             
             com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
-                    (float)(topRight.x - other.getWidth() * Math.acos(radians30)), 
-                    (float)(topRight.y + other.getWidth() * Math.asin(radians30)));
+                    (float)(topRight.x - other.getHeight() * Math.cos(radians30)), 
+                    (float)(topRight.y + other.getHeight() * Math.sin(radians30)));
             
             bottom = new Line2D(bottomLeft, bottomRight);
             top = new Line2D(topLeft, topRight);
@@ -113,15 +136,15 @@ public class Puck
             
             com.sun.javafx.geom.Point2D bottomLeft = new com.sun.javafx.geom.Point2D(
                     (float)(other.getX() + other.getHeight() * Math.sin(radians60)), 
-                    (float)(other.getY() + other.getHeight() * Math.cos(radians60)));
+                    (float)(other.getY() - other.getHeight() * Math.cos(radians60)));
             
             com.sun.javafx.geom.Point2D topRight = new com.sun.javafx.geom.Point2D(
                     (float)(other.getX() - other.getWidth() * Math.sin(radians30)), 
-                    (float)(other.getY() + other.getWidth() * Math.cos(radians30)));
+                    (float)(other.getY() - other.getWidth() * Math.cos(radians30)));
             
             com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
-                    (float)(topRight.x + other.getWidth() * Math.acos(radians30)), 
-                    (float)(topRight.y + other.getWidth() * Math.asin(radians30)));
+                    (float)(topRight.x + other.getHeight() * Math.cos(radians30)), 
+                    (float)(topRight.y - other.getHeight() * Math.sin(radians30)));
             
             bottom = new Line2D(bottomLeft, bottomRight);
             top = new Line2D(topLeft, topRight);
@@ -133,19 +156,8 @@ public class Puck
         lines.add(top);
         lines.add(left);
         lines.add(right);
-
-        for(Line2D line : lines)
-        {
-            com.sun.javafx.geom.Point2D circleCenter = new com.sun.javafx.geom.Point2D((float)shape.getCenterX(), (float)shape.getCenterY());
-            double distance = line.ptSegDist(circleCenter);
-
-            if(distance < radius)
-            {
-                return true;
-            }
-        }
         
-        return false;
+        return lines;
     }
     
     public double findDistance(double fromX, double fromY, double toX, double toY){
