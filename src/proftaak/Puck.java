@@ -5,8 +5,10 @@
  */
 package proftaak;
 
+import com.sun.javafx.geom.Line2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -45,19 +47,112 @@ public class Puck
 
     public Boolean botstMet(Rectangle other) 
     {
-        double tx, ty, cx, cy;
+        double radians60 = Math.toRadians(other.getRotate());
+        double radians30 = Math.toRadians(90 - other.getRotate());
+
+        Line2D bottom, top, left, right;
         
-        double circleCenterX = positie.getX() + radius;
-        double circleCenterY = positie.getY() + radius;
+        ArrayList<Line2D> lines = new ArrayList<Line2D>();
+        
+        if(other.getRotate() == 0)
+        {
+            // Efficiente collision check.
+            return shape.intersects(other.getBoundsInLocal());
+        }
+        else if(other.getRotate() > 0)
+        {
+            // Maak 4 lijnen aan voor de box. Eindpunt = start + dX / dY * width
+            // Per lijn object, gebruik "ptSegDist" om de afstand te kijken naar center van de cirkel
+            // Line1.ptSegDist(cirkel.centerX, cirkel.centerY)
+            // if(^  < radius)
+            // Collision!
+            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)other.getX(), (float)other.getY());
+            
+            com.sun.javafx.geom.Point2D bottomLeft = new com.sun.javafx.geom.Point2D(
+                    (float)(other.getX() - other.getHeight() * Math.sin(radians60)), 
+                    (float)(other.getY() + other.getHeight() * Math.cos(radians60)));
+            
+            com.sun.javafx.geom.Point2D topRight = new com.sun.javafx.geom.Point2D(
+                    (float)(other.getX() + other.getWidth() * Math.sin(radians30)), 
+                    (float)(other.getY() + other.getWidth() * Math.cos(radians30)));
+            
+            com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
+                    (float)(topRight.x - other.getWidth() * Math.acos(radians30)), 
+                    (float)(topRight.y + other.getWidth() * Math.asin(radians30)));
+            
+            bottom = new Line2D(bottomLeft, bottomRight);
+            top = new Line2D(topLeft, topRight);
+            left = new Line2D(bottomLeft, topLeft);
+            right = new Line2D(bottomRight, topRight);
+            
+//            double angle = other.getRotate();
+//            double rectCenterX = (other.getWidth() / 2) + other.getX();
+//            double rectCenterY = (other.getHeight() / 2) + other.getX();
+//            double radians = angle * Math.PI / 180;
+//            
+//            // Rotate circle's center point back
+//            double unrotatedCircleX = Math.cos(radians) * (shape.getCenterX() - rectCenterX) - 
+//                    Math.sin(radians) * (shape.getCenterY() - rectCenterY) + rectCenterX;
+//            double unrotatedCircleY  = Math.sin(radians) * (shape.getCenterX() - rectCenterX) + 
+//                    Math.cos(radians) * (shape.getCenterY() - rectCenterY) + rectCenterY;
+//
+//            Circle unrotatedCircle = new Circle();
+//            unrotatedCircle.setCenterX(unrotatedCircleX);
+//            unrotatedCircle.setCenterY(unrotatedCircleY);
+//            unrotatedCircle.setRadius(radius);
+//            
+//            other.setRotate(0);
+//            Boolean collision = unrotatedCircle.intersects(other.getBoundsInLocal());
+//            other.setRotate(angle);
+//
+//            return collision;
+        }
+        else
+        {
+            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)other.getX(), (float)other.getY());
+            
+            com.sun.javafx.geom.Point2D bottomLeft = new com.sun.javafx.geom.Point2D(
+                    (float)(other.getX() + other.getHeight() * Math.sin(radians60)), 
+                    (float)(other.getY() + other.getHeight() * Math.cos(radians60)));
+            
+            com.sun.javafx.geom.Point2D topRight = new com.sun.javafx.geom.Point2D(
+                    (float)(other.getX() - other.getWidth() * Math.sin(radians30)), 
+                    (float)(other.getY() + other.getWidth() * Math.cos(radians30)));
+            
+            com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
+                    (float)(topRight.x + other.getWidth() * Math.acos(radians30)), 
+                    (float)(topRight.y + other.getWidth() * Math.asin(radians30)));
+            
+            bottom = new Line2D(bottomLeft, bottomRight);
+            top = new Line2D(topLeft, topRight);
+            left = new Line2D(bottomLeft, topLeft);
+            right = new Line2D(bottomRight, topRight);
+        }
+        
+        lines.add(bottom);
+        lines.add(top);
+        lines.add(left);
+        lines.add(right);
 
-        double rectCenterX = other.getX() + (other.getWidth() * .5);
-        double rectCenterY = other.getY() + (other.getHeight() * .5);
+        for(Line2D line : lines)
+        {
+            com.sun.javafx.geom.Point2D circleCenter = new com.sun.javafx.geom.Point2D((float)shape.getCenterX(), (float)shape.getCenterY());
+            double distance = line.ptSegDist(circleCenter);
 
-        double rectWidth = other.getWidth();
-        double rectHeight = other.getHeight();
-        double angle = Math.toRadians(other.getRotate());
+            if(distance < radius)
+            {
+                return true;
+            }
+        }
         
         return false;
+    }
+    
+    public double findDistance(double fromX, double fromY, double toX, double toY){
+        double a = Math.abs(fromX - toX);
+        double b = Math.abs(fromY - toY);
+
+        return Math.sqrt((a * a) + (b * b));
     }
 
     public Circle getShape() 
