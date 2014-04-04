@@ -72,6 +72,8 @@ public class Puck
     {
         double radians60 = Math.toRadians(other.getRotate());
         double radians30 = Math.toRadians(90 - other.getRotate());
+        double originalCX = other.getX() + other.getWidth() * .5;
+        double originalCY = other.getY() + other.getHeight() * .5;
 
         Line2D bottom, top, left, right;
         
@@ -84,20 +86,25 @@ public class Puck
         }
         else if(other.getRotate() > 0)
         {
+            double adjustedX = originalCX + ((other.getHeight() / 2) * Math.cos(radians30)) - (0.5 * other.getWidth() * Math.cos(radians60));
+            double adjustedY = originalCY - ((other.getHeight() / 2) * Math.cos(radians30)) - (0.5 * other.getWidth() * Math.sin(radians60));
+            
             // Maak 4 lijnen aan voor de box. Eindpunt = start + dX / dY * width
             // Per lijn object, gebruik "ptSegDist" om de afstand te kijken naar center van de cirkel
             // Line1.ptSegDist(cirkel.centerX, cirkel.centerY)
             // if(^  < radius)
             // Collision!
-            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)other.getX(), (float)other.getY());
+            // I feel like this code is double at a lot of points, gonna see if I can swap this around as well.
+            // TODO: Voeg samen in 1 if.
+            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)adjustedX, (float)adjustedY);
             
             com.sun.javafx.geom.Point2D bottomLeft = new com.sun.javafx.geom.Point2D(
-                    (float)(other.getX() - other.getHeight() * Math.sin(radians60)), 
-                    (float)(other.getY() + other.getHeight() * Math.cos(radians60)));
+                    (float)(adjustedX - other.getHeight() * Math.sin(radians60)), 
+                    (float)(adjustedY + other.getHeight() * Math.cos(radians60)));
             
             com.sun.javafx.geom.Point2D topRight = new com.sun.javafx.geom.Point2D(
-                    (float)(other.getX() + other.getWidth() * Math.sin(radians30)), 
-                    (float)(other.getY() + other.getWidth() * Math.cos(radians30)));
+                    (float)(adjustedX + other.getWidth() * Math.sin(radians30)), 
+                    (float)(adjustedY + other.getWidth() * Math.cos(radians30)));
             
             com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
                     (float)(topRight.x - other.getHeight() * Math.cos(radians30)), 
@@ -107,40 +114,21 @@ public class Puck
             top = new Line2D(topLeft, topRight);
             left = new Line2D(bottomLeft, topLeft);
             right = new Line2D(bottomRight, topRight);
-            
-//            double angle = other.getRotate();
-//            double rectCenterX = (other.getWidth() / 2) + other.getX();
-//            double rectCenterY = (other.getHeight() / 2) + other.getX();
-//            double radians = angle * Math.PI / 180;
-//            
-//            // Rotate circle's center point back
-//            double unrotatedCircleX = Math.cos(radians) * (shape.getCenterX() - rectCenterX) - 
-//                    Math.sin(radians) * (shape.getCenterY() - rectCenterY) + rectCenterX;
-//            double unrotatedCircleY  = Math.sin(radians) * (shape.getCenterX() - rectCenterX) + 
-//                    Math.cos(radians) * (shape.getCenterY() - rectCenterY) + rectCenterY;
-//
-//            Circle unrotatedCircle = new Circle();
-//            unrotatedCircle.setCenterX(unrotatedCircleX);
-//            unrotatedCircle.setCenterY(unrotatedCircleY);
-//            unrotatedCircle.setRadius(radius);
-//            
-//            other.setRotate(0);
-//            Boolean collision = unrotatedCircle.intersects(other.getBoundsInLocal());
-//            other.setRotate(angle);
-//
-//            return collision;
         }
         else
         {
-            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)other.getX(), (float)other.getY());
+            double adjustedX = originalCX - ((other.getHeight() / 2) * Math.cos(radians30)) + (0.5 * other.getWidth() * Math.cos(radians60));
+            double adjustedY = originalCY - ((other.getHeight() / 2) * Math.cos(radians30)) + (0.5 * other.getWidth() * Math.sin(radians60));
+            
+            com.sun.javafx.geom.Point2D topLeft = new com.sun.javafx.geom.Point2D((float)adjustedX, (float)adjustedY);
             
             com.sun.javafx.geom.Point2D bottomLeft = new com.sun.javafx.geom.Point2D(
-                    (float)(other.getX() + other.getHeight() * Math.sin(radians60)), 
-                    (float)(other.getY() - other.getHeight() * Math.cos(radians60)));
+                    (float)(adjustedX + other.getHeight() * Math.sin(radians60)), 
+                    (float)(adjustedY - other.getHeight() * Math.cos(radians60)));
             
             com.sun.javafx.geom.Point2D topRight = new com.sun.javafx.geom.Point2D(
-                    (float)(other.getX() - other.getWidth() * Math.sin(radians30)), 
-                    (float)(other.getY() - other.getWidth() * Math.cos(radians30)));
+                    (float)(adjustedX - other.getWidth() * Math.sin(radians30)), 
+                    (float)(adjustedY - other.getWidth() * Math.cos(radians30)));
             
             com.sun.javafx.geom.Point2D bottomRight = new com.sun.javafx.geom.Point2D(
                     (float)(topRight.x + other.getHeight() * Math.cos(radians30)), 

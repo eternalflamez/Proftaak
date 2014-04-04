@@ -206,7 +206,7 @@ public class Spel extends Observable {
         {
             Line line = new Line(l.x1, l.y1, l.x2, l.y2);
             // Tekent de collisie lijnen voor debug.
-            // root.getChildren().add(line);
+            root.getChildren().add(line);
         }
         
         s.setScene(scene);
