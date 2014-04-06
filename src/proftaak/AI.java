@@ -8,6 +8,7 @@ package proftaak;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -19,7 +20,7 @@ public class AI extends Speler {
         super(naam, rating, kleur, batLokatie, hoek);
     }
     
-       public void beweeg(double snelheidX, double snelheidY, double puckY)
+    public Rectangle beweeg(double snelheidX, double snelheidY, double puckY)
     {
         double y = this.getBat().getPositie().getY();
         if( y<310 && y>170){
@@ -32,5 +33,7 @@ public class AI extends Speler {
                 this.getBat().beweegSchuin(-snelheidX, -snelheidY);
             }
         }
+        
+        return getBat().getRect();
     }
 }

@@ -14,11 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import javafx.animation.AnimationTimer;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -140,33 +141,46 @@ public class Spel extends Observable {
     private void updateVeld(Stage stage)
     {
         Stage s = stage;
+        List<Node> nodes = s.getScene().getRoot().getChildrenUnmodifiable();
         
         Pane root = new Pane();
         Scene scene = new Scene(root, sideWidth, screenHeight);
+        setKeyEventHandler(scene);
         
         this.puck.beweegPuck(direction);
         
         Circle puck = this.puck.getShape();
         root.getChildren().add(puck);
         
+        // Waarom we dan een for loop gebruiken als we daarna toch ALTIJD bots toevoegen?
         for(Human h: humanSpelers)
         {
-            h.beweeg(richting);
+            h.beweeg(richting * 2);
             Rectangle bat = h.getBat().getRect();
             root.getChildren().add(bat);
         }
-//         Bat's tekenen van alle spelers
-        AI ai1 = aiSpelers.get(0);
-            ai1.beweeg(-1, 1.5, puck.getCenterY());
-            Rectangle aiBat1 = ai1.getBat().getRect();
-            root.getChildren().add(aiBat1);
-            
-           AI ai2 = aiSpelers.get(1);
-            ai2.beweeg(1, 1.5, puck.getCenterY());
-            Rectangle aiBat2 = ai2.getBat().getRect();
-            root.getChildren().add(aiBat2);
         
-        ObservableList<Node> nodes = s.getScene().getRoot().getChildrenUnmodifiable();
+        // Bats tekenen van alle spelers
+        Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, 1.5, puck.getCenterY());
+        root.getChildren().add(aiBat1);
+           
+        Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, 1.5, puck.getCenterY());
+        root.getChildren().add(aiBat2);
+         
+        // Collisies met de bats hier omdat.
+        if(this.puck.botstMet(aiBat1))
+        {
+            direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+        }
+        else if(this.puck.botstMet(aiBat2))
+        {
+            direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+        }
+        else if(this.puck.botstMet(humanSpelers.get(0).getBat().getRect()))
+        {
+            direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+        }
+            
         ArrayList<Line2D> lines = new ArrayList<Line2D>();
         
         for (int i = nodes.size() - 1; i >= 0 ; i--) 
@@ -185,6 +199,7 @@ public class Spel extends Observable {
                 
                 lines.addAll(this.puck.generateLines(shadowCopy));
                 Rectangle shape = shadowCopy;
+                
                 if(this.puck.botstMet(shape))
                 {
                     System.out.println("Bosting!");
@@ -359,5 +374,37 @@ public class Spel extends Observable {
         {
             this.richting = richting;
         }
+    }
+    
+    private void setKeyEventHandler(final Scene keyScene)
+    {
+        final EventHandler<KeyEvent> keyPressedEventHandler =
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(final KeyEvent keyEvent) {
+                    if (keyEvent.getCode() == KeyCode.LEFT) {
+                        setRichting(-1);
+                    }
+                    else if(keyEvent.getCode() == KeyCode.RIGHT)
+                    {
+                        setRichting(1);
+                    }
+                    else
+                    {
+                        setRichting(0);
+                    }
+                }
+           };
+        
+        final EventHandler<KeyEvent> keyReleasedEventHandler =
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(final KeyEvent keyEvent) {
+                    setRichting(0);
+                }
+           };
+        
+        keyScene.setOnKeyPressed(keyPressedEventHandler);
+        keyScene.setOnKeyReleased(keyReleasedEventHandler);
     }
 }

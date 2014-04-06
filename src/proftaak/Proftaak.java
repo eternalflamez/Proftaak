@@ -6,23 +6,20 @@
 
 package proftaak;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -30,6 +27,8 @@ import javafx.stage.Stage;
  * @author Sander
  */
 public class Proftaak extends Application {
+    LobbyGUIController lobbyGUIController;
+    
     @Override
     public void start(final Stage primaryStage) {
         // TODO: Login scherm
@@ -123,7 +122,7 @@ public class Proftaak extends Application {
     
     private void toonLobby(Stage primaryStage, Lobby lobby) throws Exception
     {
-        LobbyGUIController lobbyGUIController = new LobbyGUIController(lobby);
+        lobbyGUIController = new LobbyGUIController(lobby);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyGUI.fxml"));
         loader.setController(lobbyGUIController);
         
@@ -133,7 +132,7 @@ public class Proftaak extends Application {
         primaryStage.setTitle("Lobby");
         primaryStage.show();
     }
-
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be
