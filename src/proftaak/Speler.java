@@ -30,6 +30,7 @@ public class Speler {
         this.bat = new Bat(kleur, batLokatie, Hoek);
         this.naam = naam;
         this.hoek = Hoek;
+        score = 20;
     }
     
     public void addScore(){

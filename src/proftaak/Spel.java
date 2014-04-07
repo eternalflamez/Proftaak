@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -44,7 +45,6 @@ public class Spel extends Observable {
     private List<Color> colors;
     private AnimationTimer timer;
     private Point2D direction;
-    
     private int richting; // wordt gebruikt bij het bewegen van de bat.
     private List<Human> humanSpelers;
     private List<AI> aiSpelers;
@@ -148,7 +148,6 @@ public class Spel extends Observable {
         setKeyEventHandler(scene);
         
         this.puck.beweegPuck(direction);
-        
         Circle puck = this.puck.getShape();
         root.getChildren().add(puck);
         
@@ -160,6 +159,13 @@ public class Spel extends Observable {
             root.getChildren().add(bat);
         }
         
+        Label scoreSpeler = new Label();
+        scoreSpeler.setText(String.valueOf(humanSpelers.get(0).getScore()));
+        scoreSpeler.setLayoutX(10);
+        scoreSpeler.setLayoutY(10);
+        scoreSpeler.setTextFill(Color.RED);
+        root.getChildren().add(scoreSpeler);
+        
         // Ai bewegen en toevoegen.
            Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, Math.sqrt(3), puck.getCenterY());
             Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, Math.sqrt(3), puck.getCenterY());
@@ -167,6 +173,20 @@ public class Spel extends Observable {
          
         root.getChildren().add(aiBat1);
         root.getChildren().add(aiBat2);
+        
+        Label scoreAI1 = new Label();
+        scoreAI1.setText(String.valueOf(aiSpelers.get(0).getScore()));
+        scoreAI1.setLayoutX(10);
+        scoreAI1.setLayoutY(25);
+        scoreAI1.setTextFill(Color.GREEN);
+        root.getChildren().add(scoreAI1);
+        
+        Label scoreAI2 = new Label();
+        scoreAI2.setText(String.valueOf(aiSpelers.get(1).getScore()));
+        scoreAI2.setLayoutX(10);
+        scoreAI2.setLayoutY(40);
+        scoreAI2.setTextFill(Color.BLUE);
+        root.getChildren().add(scoreAI2);
         // Collisies met de bats hier omdat.
         if(this.puck.botstMet(aiBat1))
         {
