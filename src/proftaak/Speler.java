@@ -40,7 +40,7 @@ public class Speler {
     public void removeScore(){
         score--;
     }
-    
+
     public String getNaam()
     {
         return naam;
