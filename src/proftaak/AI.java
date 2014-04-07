@@ -22,16 +22,38 @@ public class AI extends Speler {
     
     public Rectangle beweeg(double snelheidX, double snelheidY, double puckY)
     {
+        double sY = 2*snelheidY;
+        double sX = 2*snelheidX;
+        
         double y = this.getBat().getPositie().getY();
-        if( y<310 && y>170){
+        if(this.getBat().getPositie().getY()<310 && this.getBat().getPositie().getY() >170)
+        {
             if(puckY > this.getBat().getPositie().getY())
             {
-                this.getBat().beweegSchuin(snelheidX, snelheidY);
+                this.getBat().beweegSchuin(sX, sY);
+                
+                System.out.println("eerste if"+this.getBat().getPositie().getY());
             }
             else if(puckY<this.getBat().getPositie().getY())
             {
-                this.getBat().beweegSchuin(-snelheidX, -snelheidY);
+                this.getBat().beweegSchuin(-sX, -sY);
+                
+                System.out.println("eerste if"+this.getBat().getPositie().getY());
             }
+        }
+        if(this.getBat().getPositie().getY()>=310 )
+        {
+                this.getBat().beweegSchuin(-snelheidX, -snelheidY);
+                
+                System.out.println("Tweede if"+this.getBat().getPositie().getY());
+            
+        }
+        if(this.getBat().getPositie().getY() <=170){
+            
+                this.getBat().beweegSchuin(snelheidX, snelheidY);
+                
+                System.out.println("Tweede if"+this.getBat().getPositie().getY());
+            
         }
         
         return getBat().getRect();
