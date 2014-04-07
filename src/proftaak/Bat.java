@@ -41,7 +41,10 @@ public class Bat {
     
     public void beweeg(double beweging)
     {
-        positie = new Point2D(positie.getX() + beweging, positie.getY());
+        if(positie.getX()+beweging < 315 && positie.getX()+beweging > 145)
+        {
+            positie = new Point2D(positie.getX() + beweging, positie.getY());
+        }
 
         rect.setLayoutX(positie.getX());
         rect.setLayoutY(positie.getY());

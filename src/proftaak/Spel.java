@@ -382,10 +382,11 @@ public class Spel extends Observable {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(final KeyEvent keyEvent) {
-                    if (keyEvent.getCode() == KeyCode.LEFT) {
+                    double batXPos = humanSpelers.get(0).getBat().getPositie().getX();
+                    if (keyEvent.getCode() == KeyCode.LEFT) /*&& batXPos > wallWidth (werkt deels, schiet af en toe over de rand)*/ {
                         setRichting(-1);
                     }
-                    else if(keyEvent.getCode() == KeyCode.RIGHT)
+                    else if(keyEvent.getCode() == KeyCode.RIGHT) /*&& batXPos < wallWidth + openingSize * sideWidth - humanSpelers.get(0).getBat().getRect().getWidth() (werkt deels, schiet af en toe over de rand)*/
                     {
                         setRichting(1);
                     }

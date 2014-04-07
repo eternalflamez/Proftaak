@@ -23,6 +23,5 @@ public class Human extends Speler {
     {
         // Todo, get keyinput en beweeg
         this.getBat().beweeg(richting);
-        
     }
 }
