@@ -36,7 +36,10 @@ public class Speler {
     public void addScore(){
         score++;
     }
-    
+    public void removeScore()
+    {
+        score--;
+    }
     public String getNaam()
     {
         return naam;

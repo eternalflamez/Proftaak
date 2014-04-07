@@ -425,7 +425,7 @@ public class Spel extends Observable {
         // TODO: een removeScore toevoegen.
         winner.addScore();
         
-        // loser.removeScore();
+        loser.removeScore();
     }
     
     /**
