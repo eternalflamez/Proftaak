@@ -20,7 +20,7 @@ import javafx.scene.transform.Rotate;
 public class Bat {
 
     private final Color kleur;
-    private  Point2D positie;
+    private Point2D positie;
 
     private Rectangle rect;
     private double richting;
@@ -33,11 +33,10 @@ public class Bat {
         
         this.rect =  new Rectangle(40,10,kleur);
         
-        rect.getTransforms().add(new Rotate(richting));
-        rect.setLayoutX(positie.getX());
-        rect.setLayoutY(positie.getY());
+        rect.setRotate(hoek);
+        rect.setX(positie.getX());
+        rect.setY(positie.getY());
     }
-    
     
     public void beweeg(double beweging)
     {
@@ -45,33 +44,17 @@ public class Bat {
         {
             positie = new Point2D(positie.getX() + beweging, positie.getY());
         }
-
-        rect.setLayoutX(positie.getX());
-        rect.setLayoutY(positie.getY());
+        
+        rect.setX(positie.getX());
+        rect.setY(positie.getY());
     }
      public void beweegSchuin(double bewegingX,double bewegingY)
     {
         positie = new Point2D(positie.getX() + bewegingX, positie.getY() + bewegingY);
 
-        rect.setLayoutX(positie.getX());
-        rect.setLayoutY(positie.getY());
+        rect.setX(positie.getX());
+        rect.setY(positie.getY());
     }
-//
-//    public void AddRect(Group group) {
-//
-//        if (rect != null) {
-//            group.getChildren().remove(rect);
-//        }
-//        
-//        rect = new Rectangle(40, 10, kleur);
-//        rect.getTransforms().add(new Rotate(richting));
-//        rect.setLayoutX(positie.getX());
-//        rect.setLayoutY(positie.getY());
-//
-//        group.getChildren().add(rect);
-//        
-//        
-//    }
     
     public Rectangle getRect()
     {
@@ -81,9 +64,5 @@ public class Bat {
     public Point2D getPositie()
     {
         return positie;
-    }
-    public void setY(double y)
-    {
-        this.positie = new Point2D(this.positie.getX(), y);
     }
 }
