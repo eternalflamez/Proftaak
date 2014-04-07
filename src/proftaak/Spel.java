@@ -49,6 +49,7 @@ public class Spel extends Observable {
     private List<Human> humanSpelers;
     private List<AI> aiSpelers;
     
+    private Speler lastTouchedPuck;
      // List of constants.
     // Wortel van 750.000 = hoogte van het scherm voor het geval dat Zijde A = Zijde B = Zijde C = 1000.
     int screenHeight = (int)Math.sqrt(187500); // a2 + b2 = c2, 62500 + ? = 250000
@@ -66,6 +67,8 @@ public class Spel extends Observable {
      */
     public Spel(String naam, Gebruiker host, Boolean publicGame, int id)
     {
+        lastTouchedPuck = new Speler(naam, wallWidth, Color.AQUA, new Point2D(0,0), id);
+        
         colors = new ArrayList();
         //spelers = new ArrayList();
         gebruikers = new ArrayList();
@@ -167,8 +170,8 @@ public class Spel extends Observable {
         root.getChildren().add(scoreSpeler);
         
         // Ai bewegen en toevoegen.
-           Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, Math.sqrt(3), puck.getCenterY());
-            Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, Math.sqrt(3), puck.getCenterY());
+        Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, Math.sqrt(3), puck.getCenterY());
+        Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, Math.sqrt(3), puck.getCenterY());
         
          
         root.getChildren().add(aiBat1);
@@ -187,6 +190,35 @@ public class Spel extends Observable {
         scoreAI2.setLayoutY(40);
         scoreAI2.setTextFill(Color.BLUE);
         root.getChildren().add(scoreAI2);
+        
+         Rectangle bottom = new Rectangle(sideWidth / 2, screenHeight - sideHeight, sideWidth * openingSize, sideHeight);
+        Rectangle left = new Rectangle(20, screenHeight / 2, sideWidth * openingSize, sideHeight);
+        left.setRotate(-60);
+        Rectangle right = new Rectangle(280, (screenHeight) / 2, sideWidth * openingSize, sideHeight);
+        right.setRotate(60);
+        
+        if(this.puck.botstMet(bottom))
+        {
+            updateScore(lastTouchedPuck, humanSpelers.get(0));
+            this.direction = new Point2D(getRandom(-4, 4), getRandom(-4, 4));
+            this.puck = new Puck(new Point2D(250, 250), 10, direction);
+        }
+        else if(this.puck.botstMet(left))
+        {
+            updateScore(lastTouchedPuck, aiSpelers.get(0));
+            this.direction = new Point2D(getRandom(-4, 4), getRandom(-4, 4));
+            this.puck = new Puck(new Point2D(250, 250), 10, direction);
+            // updateScore(lastTouchedPuck, humanSpelers.get(1));
+        }
+        else if(this.puck.botstMet(right))
+        {
+            updateScore(lastTouchedPuck, aiSpelers.get(1));
+            this.direction = new Point2D(getRandom(-4, 4), getRandom(-4, 4));
+            this.puck = new Puck(new Point2D(250, 250), 10, direction);
+            // updateScore(lastTouchedPuck, humanSpelers.get(2));
+        }
+        
+        
         // Collisies met de bats hier omdat.
         if(this.puck.botstMet(aiBat1))
         {
@@ -222,7 +254,7 @@ public class Spel extends Observable {
                 
                 if(this.puck.botstMet(shape))
                 {
-                    System.out.println("Bosting!");
+                    System.out.println("Botsing!");
                     
                     if(shape.getRotate() == 0)
                     {
@@ -231,7 +263,25 @@ public class Spel extends Observable {
                     }
                     else
                     {
-                        direction = new Point2D(direction.getX() * -1, direction.getY() * -1);
+                        // Pak de angle waarin hij terug kaatst aan de rechterkant
+                        double angle = Math.atan(direction.getX() / direction.getY()) + 30 + 120;
+                        
+                        if(shape.getRotate() < 0)
+                        {
+                            // En aan de linkerkant
+                            angle = 30 - 60 + Math.toDegrees(Math.atan(direction.getX() / direction.getY()));
+                        }
+                        
+                        angle = Math.toRadians(angle);
+                        
+                        // double oldRatio = direction.getX() / direction.getY();
+                        double newXRatio = direction.getX() / Math.cos(Math.atan(direction.getX() / direction.getY()));
+                        double newYRatio = direction.getY() / Math.cos(Math.atan(direction.getX() / direction.getY()));
+                        // double newY = direction.getX() / newRatio;
+                        
+                        double newX = Math.cos(angle) * 2;
+                        double newY = Math.sin(angle) * 2;
+                        direction = new Point2D(newX, newY);
                     }
                 }
             }
@@ -240,8 +290,8 @@ public class Spel extends Observable {
         for(Line2D l : lines)
         {
             Line line = new Line(l.x1, l.y1, l.x2, l.y2);
-            // Tekent de collisie lijnen voor debug.
-            root.getChildren().add(line);
+//            // Tekent de collisie lijnen voor debug.
+//            root.getChildren().add(line);
         }
         
         s.setScene(scene);
