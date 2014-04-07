@@ -160,13 +160,13 @@ public class Spel extends Observable {
             root.getChildren().add(bat);
         }
         
-        // Bats tekenen van alle spelers
-        Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, 1.5, puck.getCenterY());
-        root.getChildren().add(aiBat1);
-           
-        Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, 1.5, puck.getCenterY());
-        root.getChildren().add(aiBat2);
+        // Ai bewegen en toevoegen.
+           Rectangle aiBat1 = aiSpelers.get(0).beweeg(-1, Math.sqrt(3), puck.getCenterY());
+            Rectangle aiBat2 = aiSpelers.get(1).beweeg(1, Math.sqrt(3), puck.getCenterY());
+        
          
+        root.getChildren().add(aiBat1);
+        root.getChildren().add(aiBat2);
         // Collisies met de bats hier omdat.
         if(this.puck.botstMet(aiBat1))
         {

@@ -82,4 +82,8 @@ public class Bat {
     {
         return positie;
     }
+    public void setY(double y)
+    {
+        this.positie = new Point2D(this.positie.getX(), y);
+    }
 }

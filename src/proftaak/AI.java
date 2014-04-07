@@ -22,16 +22,27 @@ public class AI extends Speler {
     
     public Rectangle beweeg(double snelheidX, double snelheidY, double puckY)
     {
+        double sY = 2*snelheidY;
+        double sX = 2*snelheidX;
+        
         double y = this.getBat().getPositie().getY();
-        if( y<310 && y>170){
+        if(this.getBat().getPositie().getY()<310 && this.getBat().getPositie().getY() >170)
+        {
             if(puckY > this.getBat().getPositie().getY())
             {
-                this.getBat().beweegSchuin(snelheidX, snelheidY);
+                this.getBat().beweegSchuin(sX, sY);
             }
             else if(puckY<this.getBat().getPositie().getY())
             {
-                this.getBat().beweegSchuin(-snelheidX, -snelheidY);
+                this.getBat().beweegSchuin(-sX, -sY);
             }
+        }
+        if(this.getBat().getPositie().getY()>=310 )
+        {
+                this.getBat().beweegSchuin(-snelheidX, -snelheidY);
+        }
+        if(this.getBat().getPositie().getY() <=170){
+                this.getBat().beweegSchuin(snelheidX, snelheidY);
         }
         
         return getBat().getRect();
