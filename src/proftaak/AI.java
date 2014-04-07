@@ -31,29 +31,18 @@ public class AI extends Speler {
             if(puckY > this.getBat().getPositie().getY())
             {
                 this.getBat().beweegSchuin(sX, sY);
-                
-                System.out.println("eerste if"+this.getBat().getPositie().getY());
             }
             else if(puckY<this.getBat().getPositie().getY())
             {
                 this.getBat().beweegSchuin(-sX, -sY);
-                
-                System.out.println("eerste if"+this.getBat().getPositie().getY());
             }
         }
         if(this.getBat().getPositie().getY()>=310 )
         {
                 this.getBat().beweegSchuin(-snelheidX, -snelheidY);
-                
-                System.out.println("Tweede if"+this.getBat().getPositie().getY());
-            
         }
         if(this.getBat().getPositie().getY() <=170){
-            
                 this.getBat().beweegSchuin(snelheidX, snelheidY);
-                
-                System.out.println("Tweede if"+this.getBat().getPositie().getY());
-            
         }
         
         return getBat().getRect();
