@@ -214,36 +214,23 @@ public class Spel extends Observable {
         Rectangle right = new Rectangle(280, (screenHeight) / 2, sideWidth * openingSize, sideHeight);
         right.setRotate(60);
         
-        if(this.puck.botstMet(bottom))
-        {
-            updateScore(lastTouchedPuck, humanSpelers.get(0));
-            resetPuck();
-        }
-        else if(this.puck.botstMet(left))
-        {
-            updateScore(lastTouchedPuck, aiSpelers.get(0));
-            resetPuck();
-            // updateScore(lastTouchedPuck, humanSpelers.get(1));
-        }
-        else if(this.puck.botstMet(right))
-        {
-            updateScore(lastTouchedPuck, aiSpelers.get(1));
-            resetPuck();
-            // updateScore(lastTouchedPuck, humanSpelers.get(2));
-        }
+        Boolean collided = false;
         
         // Collisies met de bats hier omdat.
         if(this.puck.botstMet(aiBat1))
         {
             difficultBounce(aiBat1);
+            collided = true;
         }
         else if(this.puck.botstMet(aiBat2))
         {
             difficultBounce(aiBat2);
+            collided = true;
         }
         else if(this.puck.botstMet(humanSpelers.get(0).getBat().getRect()))
         {
             difficultBounce(humanSpelers.get(0).getBat().getRect());
+            collided = true;
         }
         
         for (int i = nodes.size() - 1; i >= 0 ; i--) 
@@ -265,25 +252,46 @@ public class Spel extends Observable {
                 
                 if(this.puck.botstMet(shape))
                 {
-                    System.out.println("Botsing!");
-                    
                     if(shape.getRotate() == 0)
                     {
                         direction = new Point2D(direction.getX(), direction.getY() * -1);
                         puck.setCenterY(shape.getLayoutY() - shape.getHeight() / 2);
+                        collided = true;
                     }
                     else
                     {
                         difficultBounce(shape);
+                        collided = true;
                     }
                 }
             }
         }
         
+        if(!collided)
+        {
+            if(this.puck.botstMet(bottom))
+            {
+                updateScore(lastTouchedPuck, humanSpelers.get(0));
+                resetPuck();
+            }
+            else if(this.puck.botstMet(left))
+            {
+                updateScore(lastTouchedPuck, aiSpelers.get(0));
+                resetPuck();
+                // updateScore(lastTouchedPuck, humanSpelers.get(1));
+            }
+            else if(this.puck.botstMet(right))
+            {
+                updateScore(lastTouchedPuck, aiSpelers.get(1));
+                resetPuck();
+                // updateScore(lastTouchedPuck, humanSpelers.get(2));
+            }
+        }
+        
         for(Line2D l : lines)
         {
-            Line line = new Line(l.x1, l.y1, l.x2, l.y2);
-//            // Tekent de collisie lijnen voor debug.
+            //Line line = new Line(l.x1, l.y1, l.x2, l.y2);
+            // Tekent de collisie lijnen voor debug.
             //root.getChildren().add(line);
         }
         
@@ -293,6 +301,75 @@ public class Spel extends Observable {
     
     private void difficultBounce(Rectangle shape)
     {
+        double x = direction.getX();
+        double y = direction.getY();
+        double realAngle = 0; // Invalshoek van de bal.
+        double fakeAngle = Math.toDegrees(Math.atan(y / x)); // Hoek van de richting van de bal.
+        float adj = .01f; // The allowed adjustment in the x and y values.
+        
+        fakeAngle = Math.abs(fakeAngle);
+        
+        // Gets the real angle of the puck.
+        if(y > 0 - adj && y < 0 + adj) // Y nears 0 (between .01 and -.01
+        {
+            if(x > 0 + adj)
+            {
+                realAngle = 180;
+                fakeAngle = 0;
+            }
+            else if(x < 0 - adj)
+            {
+                realAngle = 0;
+                fakeAngle = 0;
+            }
+        }
+        else if(x > 0 - adj && x < 0 + adj) // if x nears 0
+        {
+            if(y > 0 + adj)
+            {
+                realAngle = 270;
+            }
+            else if(y < 0 - adj)
+            {
+                realAngle = 90;
+            }
+            else // if y nears 0
+            {
+                // The ball was standing still, this should be impossible.
+                realAngle = 0;
+            }
+        }
+        else
+        {
+            realAngle = (270 - 90 * x / Math.abs(x)) + fakeAngle * (y / Math.abs(y)) * (x / Math.abs(x)) % 360;
+            // if x > 0 and y > 0,      180 + a, 
+            //      and y < 0 then      180 - a, 
+            // Though if x < 0 y > 0,   360 - a
+            // And lastly if y < 0      a
+        }
+        
+        System.out.println(realAngle == (fakeAngle + 180) % 360);
+        
+        // Correlates the real angle with the corresponding *invalshoek*, to get the correct *uitvalshoek*
+        double angle = 0;
+        
+        // Todo: Change the numbers for the inbetween check so that the angles get translated correctly.
+
+        // Right side collision.
+        if(shape.getRotate() > 0)
+        {
+            realAngle = (realAngle - 60);
+            angle = 240 - realAngle;
+        }
+        
+        // Left side collision.
+        if(shape.getRotate() < 0)
+        {
+            realAngle = (60 + realAngle) % 360;
+            angle = 120 - realAngle;
+        }
+        
+        /* old angle system
         // Pak de angle waarin hij terug kaatst aan de rechterkant
         double angle = Math.atan(direction.getX() / direction.getY()) + 30 + 120;
 
@@ -301,17 +378,25 @@ public class Spel extends Observable {
             // En aan de linkerkant
             angle = 30 - 60 + Math.toDegrees(Math.atan(direction.getX() / direction.getY()));
         }
-
+*/
+        System.out.println("Botsing! (Invalshoek: " + realAngle + ", richtingshoek: " + fakeAngle + ", new angle: " + angle + ", x: " + x + ", y: " + y + ")");
+        
         angle = Math.toRadians(angle);
-
-        // double oldRatio = direction.getX() / direction.getY();
-        double newXRatio = direction.getX() / Math.cos(Math.atan(direction.getX() / direction.getY()));
-        double newYRatio = direction.getY() / Math.cos(Math.atan(direction.getX() / direction.getY()));
-        // double newY = direction.getX() / newRatio;
-
-        double newX = Math.cos(angle) * 3;
-        double newY = Math.sin(angle) * 3;
+        double newX = Math.cos(angle) * 5;
+        double newY = Math.sin(angle) * 5;
         direction = new Point2D(newX, newY);
+    }
+    
+    /**
+     * Tests if a double is between the parameters (inclusive max, exclusive min)
+     * @param test The variable to test for
+     * @param min The small amount to test for.
+     * @param max The max to test for.
+     * @return True if test falls between min and max.
+     */
+    private Boolean doubleBetween(double test, double min, double max)
+    {
+        return (test > min && test <= max);
     }
     
     /**
