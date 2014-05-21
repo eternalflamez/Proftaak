@@ -6,7 +6,15 @@
 
 package proftaak;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.TextArea;
+import rmichat.server.IChatServer;
 
 /**
  *
@@ -14,14 +22,17 @@ import java.util.ArrayList;
  */
 public class Gebruiker {
     private final ArrayList<Double> ratingLijst;
-    private String naam;
+    private String Name;
     private int highScore;
     private double rating;
+    private ArrayList<String> berichtenRMI;
+    private ArrayList<String> berichten = new ArrayList<String>();
+    private IChatServer ics;
     
     public Gebruiker(String naam)
     {
         this.ratingLijst = new ArrayList<>();
-        this.naam = naam;
+        this.Name = naam;
         highScore = 0;
         rating = 15;
         ratingLijst.add(rating);
@@ -29,7 +40,7 @@ public class Gebruiker {
     
     public String getNaam()
     {
-        return naam;
+        return Name;
     }
     
     public int getScore()
@@ -64,5 +75,45 @@ public class Gebruiker {
             
             rating += ratingLijst.get(i)* 5-i;
         }
+    }
+    
+        public void showBerichten(TextArea taBerichten) throws NotBoundException, MalformedURLException {
+        taBerichten.clear();
+        try {
+            for (String bericht : ics.getBerichten()) {
+                taBerichten.appendText(bericht + "\n");
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Gebruiker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addBericht(String bericht) throws RemoteException {
+      
+     
+        ics.addBericht(this.Name + ": " + bericht);
+        
+    }
+
+    public void startServer(String ipAdressServer) throws NotBoundException, MalformedURLException, RemoteException {
+        System.out.println("Connecting");
+        ics = (IChatServer) Naming.lookup("rmi://" + ipAdressServer + ":1099/cs");
+        System.out.println("Connected");   
+    }
+    public void setName(String name){
+        this.Name = name;
+    }
+        
+     public ArrayList<String> getBerichtenRMI() throws NotBoundException, MalformedURLException {
+        berichtenRMI = new ArrayList<>();
+
+        try {
+            
+            berichtenRMI = ics.getBerichten();
+        } catch (RemoteException exc) {
+            System.out.println(exc);
+        }
+
+        return berichtenRMI;
     }
 }

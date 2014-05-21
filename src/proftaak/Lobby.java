@@ -6,27 +6,51 @@
 
 package proftaak;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author Sander
  */
 public class Lobby implements Observer{
-    private Gebruiker gebruiker;
+    private ArrayList<String> berichten = new ArrayList<String>();
+    public Gebruiker gebruiker;
     private Chatbox chatbox;
     private List<Gebruiker> gebruikers;
     private List<Spel> spellen;
+   
+    public String ipAdress;
+    public boolean firstLobby = true;
 
-    public Lobby()
+    public Lobby() 
     {
         chatbox = new Chatbox();
         gebruikers = new ArrayList<>();
         spellen = new ArrayList<>();
+        if(firstLobby){
+        ipAdress = "127.0.0.1";
+        gebruiker = new Gebruiker("test");
+        try {
+            gebruiker.startServer(ipAdress);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        firstLobby = false;
+        }
     }
     
     /**
@@ -98,7 +122,7 @@ public class Lobby implements Observer{
     public Boolean login(String naam, String wachtwoord)
     {
         //Bewaard voor volgende iteratie
-        gebruiker = new Gebruiker(naam);
+  
         gebruikers.add(gebruiker);
         return true;
     }
@@ -117,7 +141,12 @@ public class Lobby implements Observer{
      */
     public void stuurBericht(String bericht)
     {
-        chatbox.voegBerichtToe(bericht, gebruiker);
+        try {
+            gebruiker.addBericht(bericht);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      //  chatbox.voegBerichtToe(bericht, gebruiker);
     }
     
     /**
@@ -144,5 +173,14 @@ public class Lobby implements Observer{
                 spellen.remove(i);
             }
         }
+    }
+
+      public ArrayList<String> getBerichten() throws NotBoundException, MalformedURLException {
+        berichten = gebruiker.getBerichtenRMI();
+        return berichten;
+    }
+
+    public void showBerichten() throws NotBoundException, MalformedURLException {
+     
     }
 }

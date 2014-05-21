@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <SplitPane dividerPositions="0.4983277591973244" focusTraversable="true" layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ListView fx:id="lvGames" layoutX="1.0" layoutY="28.0" prefHeight="290.0" prefWidth="299.0" />
+            <Label layoutX="14.0" layoutY="6.0" text="Games" />
+            <Label layoutX="14.0" layoutY="327.0" text="Nieuwe Game" />
+            <Label layoutX="14.0" layoutY="348.0" text="Spelnaam:" />
+            <TextField fx:id="tfSpelnaam" layoutX="128.0" layoutY="348.0" prefWidth="141.9998779296875" />
+            <Button fx:id="btStartSpel" layoutX="199.0" layoutY="374.0" mnemonicParsing="false" onAction="#btStartGame" text="Start Spel" />
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="240.0">
+          <children>
+            <SplitPane dividerPositions="0.3005050505050505" focusTraversable="true" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="293.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                    <ListView fx:id="lvGebruikersInGame" layoutX="0.0" layoutY="0.0" prefHeight="116.00009999999747" prefWidth="291.0" />
+                  </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                    <ListView fx:id="lvGebruikersInLobby" layoutX="190.0" layoutY="0.0" prefHeight="252.0" prefWidth="101.0" />
+                    <TextArea id="tfChatbox" fx:id="taChatbox" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="251.99990000000253" prefWidth="191.0" wrapText="true" />
+                    <TextField fx:id="tfBericht" layoutX="0.0" layoutY="252.0" prefWidth="254.0" />
+                    <Button fx:id="btPlaatsBericht" layoutX="254.0" layoutY="252.0" mnemonicParsing="false" onAction="#btPlaatsBericht" prefHeight="23.0" prefWidth="37.0" text="OK" />
+                  </children>
+                </AnchorPane>
+              </items>
+            </SplitPane>
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+</AnchorPane>

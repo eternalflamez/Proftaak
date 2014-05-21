@@ -6,8 +6,13 @@
 
 package proftaak;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 
 /**
  * FXML Controller class
@@ -43,12 +49,13 @@ public class LobbyGUIController implements Initializable {
     private TextField tfBericht;
     @FXML
     private Button btPlaatsBericht;
-    
+    Gebruiker gebruiker;
     Lobby lobby;
     private Spel spel = null;
     
-    public LobbyGUIController(Lobby lobby)
+    public LobbyGUIController(Lobby lobby,Gebruiker g )
     {
+        this.gebruiker = g;
         this.lobby = lobby;
     }
     
@@ -64,9 +71,14 @@ public class LobbyGUIController implements Initializable {
     
     public void btPlaatsBericht(Event evt) {
         lobby.stuurBericht(tfBericht.getText());
-        Bericht b = lobby.getChatBerichten().get(lobby.getChatBerichten().size()-1);
-        StringBuilder sb = new StringBuilder();
-        sb.append(b.getGebruiker().getNaam()).append(": ").append(b.getBericht()).append("\n");
-        taChatbox.appendText(sb.toString());
+        try {
+            gebruiker.showBerichten(taChatbox);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        
     }
 }
