@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package proftaak;
 
 import java.net.MalformedURLException;
@@ -11,8 +10,13 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,7 +29,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
+import javax.swing.JScrollPane;
+import javax.swing.text.DefaultCaret;
 
 /**
  * FXML Controller class
@@ -33,6 +38,7 @@ import javafx.stage.Stage;
  * @author Frank
  */
 public class LobbyGUIController implements Initializable {
+
     @FXML
     private ListView<?> lvGames;
     @FXML
@@ -52,33 +58,53 @@ public class LobbyGUIController implements Initializable {
     Gebruiker gebruiker;
     Lobby lobby;
     private Spel spel = null;
-    
-    public LobbyGUIController(Lobby lobby,Gebruiker g )
-    {
+
+    public LobbyGUIController(Lobby lobby, Gebruiker g) {
+
         this.gebruiker = g;
         this.lobby = lobby;
+
+
     }
-    
+    public LobbyGUIController(){
+        taChatbox = new TextArea();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
-    
+
     public void btStartGame(Event evt) {
         spel = lobby.voegSpelToe("naam", Boolean.FALSE);
         spel.startSpel(new Stage());
     }
-    
+
     public void btPlaatsBericht(Event evt) {
         lobby.stuurBericht(tfBericht.getText());
-        try {
-            gebruiker.showBerichten(taChatbox);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
         
     }
+
+    public void refreshChatBox() {
+
+     {
+         try {
+    taChatbox.clear();
+         for(String bericht : gebruiker.getBerichtenRMI())
+                       
+         taChatbox.appendText(bericht + "\n");
+                     
+         } catch (NotBoundException ex) {
+         Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (MalformedURLException ex) {
+         Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     
+       
+    }
+    
+
+}
+
+    
 }

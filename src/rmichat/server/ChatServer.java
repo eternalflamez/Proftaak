@@ -9,6 +9,11 @@ package rmichat.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import proftaak.Gebruiker;
+import proftaak.LobbyGUIController;
+import proftaak.Proftaak;
 
 /**
  *
@@ -16,15 +21,17 @@ import java.util.ArrayList;
  */
 public class ChatServer extends UnicastRemoteObject implements IChatServer{
     private ArrayList<String> berichten;
+    private LobbyGUIController lgc;
+  
     public ChatServer() throws RemoteException{
         berichten = new ArrayList<String>();
+        lgc = new LobbyGUIController();
     }
 
     @Override
     public void addBericht(String bericht) {
         berichten.add(bericht);
-        
-        System.out.println("Server ontving bericht: " + bericht.toString());
+        lgc.refreshChatBox();
         
     }
     
@@ -33,6 +40,12 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer{
     public ArrayList<String> getBerichten() {
         return berichten;
     }
+
+   
+
+
+
+
     
     
 }

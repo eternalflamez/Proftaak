@@ -7,6 +7,7 @@ package proftaak;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import rmichat.server.ChatServer;
 
 /**
  *
@@ -32,10 +34,10 @@ import javafx.stage.Stage;
  */
 public class Proftaak extends Application {
 
-    LobbyGUIController lobbyGUIController;
+   public  LobbyGUIController lobbyGUIController;
     TextField tfLoginName;
     Gebruiker gebruiker;
-  
+    ChatServer cs;
     private String nameClient;
       String ipAdressServer;
 
@@ -44,30 +46,7 @@ public class Proftaak extends Application {
         // TODO: Login scherm
         // TODO: Lobby scherm
         toonLogin(primaryStage);
-        //toonLobby(primaryStage);
-        //Spel spel = lobby.voegSpelToe("naam", Boolean.FALSE);
-        //spel.startSpel(primaryStage);
-
-        /*
-         Button btn = new Button();
-         btn.setText("Start spel");
-         btn.setOnAction(new EventHandler<ActionEvent>() 
-         {            
-         @Override
-         public void handle(ActionEvent event) {
-         toonSpel(primaryStage);
-         }
-         });
         
-         StackPane root = new StackPane();
-         root.getChildren().add(btn);
-        
-         Scene scene = new Scene(root, 300, 250);
-        
-         primaryStage.setTitle("Hello World!");
-         primaryStage.setScene(scene);
-         primaryStage.show();
-         */
     }
 
     private void toonLogin(final Stage primaryStage) {
@@ -143,7 +122,7 @@ public class Proftaak extends Application {
         lobbyGUIController = new LobbyGUIController(lobby, lobby.gebruiker);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyGUI.fxml"));
         loader.setController(lobbyGUIController);
-        
+   
         Parent root = (Parent) loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

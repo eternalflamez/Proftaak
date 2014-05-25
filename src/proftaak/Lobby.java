@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 
 
 /**
@@ -28,7 +29,7 @@ public class Lobby implements Observer{
     private Chatbox chatbox;
     private List<Gebruiker> gebruikers;
     private List<Spel> spellen;
-   
+    private Proftaak p;
     public String ipAdress;
     public boolean firstLobby = true;
 
@@ -37,7 +38,9 @@ public class Lobby implements Observer{
         chatbox = new Chatbox();
         gebruikers = new ArrayList<>();
         spellen = new ArrayList<>();
+    
         if(firstLobby){
+     
         ipAdress = "127.0.0.1";
         gebruiker = new Gebruiker("test");
         try {
@@ -142,7 +145,9 @@ public class Lobby implements Observer{
     public void stuurBericht(String bericht)
     {
         try {
+            
             gebruiker.addBericht(bericht);
+          
         } catch (RemoteException ex) {
             Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
         }

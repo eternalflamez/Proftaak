@@ -9,6 +9,8 @@ package rmichat.server;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import javafx.beans.Observable;
+import proftaak.Gebruiker;
 
 /**
  *
@@ -17,4 +19,5 @@ import java.util.ArrayList;
 public interface IChatServer extends Remote{
     void addBericht(String bericht) throws RemoteException;
     ArrayList<String> getBerichten() throws RemoteException;
+ 
 }
