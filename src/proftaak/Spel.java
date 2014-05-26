@@ -580,4 +580,9 @@ public class Spel extends Observable {
         keyScene.setOnKeyPressed(keyPressedEventHandler);
         keyScene.setOnKeyReleased(keyReleasedEventHandler);
     }
+    @Override
+    public String toString()
+    {
+        return this.naam +"/"+ gebruikers.get(0).getNaam()+"/"+this.id;
+    }
 }

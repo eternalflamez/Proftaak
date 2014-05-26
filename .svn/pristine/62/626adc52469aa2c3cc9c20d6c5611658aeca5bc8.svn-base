@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 478cc98c4d9df12076f4d5071e4e326bd93349cb eternalflamez <san_dman@hotmail.com> 1396867719 +0200	branch: Created from branch refs/remotes/origin/master
+478cc98c4d9df12076f4d5071e4e326bd93349cb 8f5a64f060a609916a3959255a44a1562ff48c4e eternalflamez <san_dman@hotmail.com> 1396874532 +0200	commit: text
+8f5a64f060a609916a3959255a44a1562ff48c4e 1dbb9e7c5c13227ee9eb895a08337e2ea6217c36 eternalflamez <san_dman@hotmail.com> 1396874538 +0200	commit: text
+1dbb9e7c5c13227ee9eb895a08337e2ea6217c36 f810c07dd293d0ce10fca691f308273405bb983f eternalflamez <san_dman@hotmail.com> 1396875159 +0200	commit: text
+f810c07dd293d0ce10fca691f308273405bb983f b2c9253a0d38c6855f409a40dd364096556449ef eternalflamez <san_dman@hotmail.com> 1396875255 +0200	commit: text
+b2c9253a0d38c6855f409a40dd364096556449ef cfb3e58c3205a956a466b8b40c8811c2ac209ca8 eternalflamez <san_dman@hotmail.com> 1396875576 +0200	commit (merge): Resolve all the conflicts
+cfb3e58c3205a956a466b8b40c8811c2ac209ca8 d9384d11e89838579abd4836e4289f1cd72bc418 eternalflamez <san_dman@hotmail.com> 1396875715 +0200	commit: Resolve all the conflicts x2
+d9384d11e89838579abd4836e4289f1cd72bc418 8ca8593a6b39304de3f67e5e7e79a080ecef93e9 eternalflamez <san_dman@hotmail.com> 1396875842 +0200	rebase -i (continue): text
+8ca8593a6b39304de3f67e5e7e79a080ecef93e9 4ca4a83caf2f66da131c62df99d819ee9d46a214 eternalflamez <san_dman@hotmail.com> 1399399087 +0200	commit: Finished the collision detection.
+4ca4a83caf2f66da131c62df99d819ee9d46a214 8f5a1f5b24bb10abafe3ab5c6e657fc488953f2d Laurens <Laurens@HPG72012> 1400677453 +0200	commit: 
+8f5a1f5b24bb10abafe3ab5c6e657fc488953f2d 31bd20ed2f80456522c091ab1f3e12a10cf8efea Laurens <Laurens@192.168.1.12> 1401049140 +0200	commit: 

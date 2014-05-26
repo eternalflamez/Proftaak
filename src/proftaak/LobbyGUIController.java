@@ -8,6 +8,7 @@ package proftaak;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -17,6 +18,8 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;
 
@@ -40,7 +44,7 @@ import javax.swing.text.DefaultCaret;
 public class LobbyGUIController implements Initializable {
 
     @FXML
-    private ListView<?> lvGames;
+    private ListView<String> lvGames;
     @FXML
     private TextField tfSpelnaam;
     @FXML
@@ -57,13 +61,15 @@ public class LobbyGUIController implements Initializable {
     private Button btPlaatsBericht;
     Gebruiker gebruiker;
     Lobby lobby;
-    private Spel spel = null;
+    
+    private ArrayList<Spel> spellen = null;
 
     public LobbyGUIController(Lobby lobby, Gebruiker g) {
 
         this.gebruiker = g;
         this.lobby = lobby;
 
+        spellen = new ArrayList<Spel>();
 
     }
     public LobbyGUIController(){
@@ -74,10 +80,30 @@ public class LobbyGUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-
-    public void btStartGame(Event evt) {
-        spel = lobby.voegSpelToe("naam", Boolean.FALSE);
-        spel.startSpel(new Stage());
+    public void btMaakGame(Event evt) {
+        if(!tfSpelnaam.getText().trim().isEmpty())
+        {
+            try {
+                lobby.voegSpelToe(tfSpelnaam.getText(), Boolean.TRUE);
+                //spel.startSpel(new Stage());
+            } catch (RemoteException ex) {
+                Logger.getLogger(LobbyGUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Refresh();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Voer een naam in.", "Warning!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+     public void btRefreshKlik(Event evt) { 
+         Refresh();
+    }
+     public void Refresh()
+    {
+         ObservableList<String> items =FXCollections.observableArrayList(lobby.showSpellen());
+         lvGames.setItems(items);
     }
 
     public void btPlaatsBericht(Event evt) {

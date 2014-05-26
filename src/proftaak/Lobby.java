@@ -7,6 +7,7 @@
 package proftaak;
 
 import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import rmichat.server.iLobby;
 
 
 /**
@@ -28,7 +30,12 @@ public class Lobby implements Observer{
     public Gebruiker gebruiker;
     private Chatbox chatbox;
     private List<Gebruiker> gebruikers;
-    private List<Spel> spellen;
+    private ArrayList<Spel> spellen;
+    
+    private ArrayList<Spel> spellenRMI;
+    
+    private iLobby il;
+    
     private Proftaak p;
     public String ipAdress;
     public boolean firstLobby = true;
@@ -45,6 +52,7 @@ public class Lobby implements Observer{
         gebruiker = new Gebruiker("test");
         try {
             gebruiker.startServer(ipAdress);
+            this.startServer();
         } catch (NotBoundException ex) {
             Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
@@ -60,9 +68,40 @@ public class Lobby implements Observer{
      * 
      * @return Alle bestaande spellen.
      */
-    public List<Spel> getSpellen()
+    public ArrayList<Spel> getSpellenRMI()throws NotBoundException, MalformedURLException
     {
-        return Collections.unmodifiableList(spellen);
+        spellenRMI = new ArrayList<Spel>();
+        try {
+            for(String s:il.getSpellen())
+            {
+                String[] arr = s.split("/");
+                spellenRMI.add(new Spel(arr[0],new Gebruiker(arr[1]),true,Integer.parseInt(arr[2])));
+            }
+        } catch (RemoteException exc) {
+            System.out.println(exc);
+        }
+
+        return spellenRMI;
+    }
+    
+     public ArrayList<String> showSpellen() {
+         
+            try {
+                spellen = getSpellenRMI();
+                // zet naar tekst array 
+              
+            } catch (NotBoundException ex) {
+                Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           ArrayList<String> spellenStrings = new ArrayList<String>();
+           for(Spel s: spellen)
+           {
+               spellenStrings.add(s.toString());
+           }
+        return spellenStrings;
     }
     
     /**
@@ -84,21 +123,9 @@ public class Lobby implements Observer{
      * @param naam De naam van het spel.
      * @param publicGame Openbaar of privé.
      */
-    public Spel voegSpelToe(String naam, Boolean publicGame)
+    public void voegSpelToe(String naam, Boolean publicGame) throws RemoteException
     {
-        Spel nieuwSpel;
-        if(spellen.size() > 0)
-        {
-            nieuwSpel = new Spel(naam, gebruiker, publicGame, spellen.get(spellen.size()-1).getId()+1);
-        }
-        else
-        {
-            nieuwSpel = new Spel(naam, gebruiker, publicGame, 0);
-        }
-        nieuwSpel.addObserver(this);
-        spellen.add(nieuwSpel);
-        
-        return nieuwSpel;
+        il.voegSpelToe(naam, gebruiker.getNaam(),gebruiker.getScore(),gebruiker.getRating(),gebruiker.getRatingLijst(), publicGame);
     }
     
     /**
@@ -187,5 +214,11 @@ public class Lobby implements Observer{
 
     public void showBerichten() throws NotBoundException, MalformedURLException {
      
+    }
+    
+    public void startServer() throws NotBoundException, MalformedURLException, RemoteException {
+        System.out.println("Connecting");
+        il = (iLobby) Naming.lookup("rmi://127.0.0.1/ls");
+        System.out.println("Connected");   
     }
 }

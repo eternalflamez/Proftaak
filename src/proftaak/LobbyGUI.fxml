@@ -17,7 +17,8 @@
             <Label layoutX="14.0" layoutY="327.0" text="Nieuwe Game" />
             <Label layoutX="14.0" layoutY="348.0" text="Spelnaam:" />
             <TextField fx:id="tfSpelnaam" layoutX="128.0" layoutY="348.0" prefWidth="141.9998779296875" />
-            <Button fx:id="btStartSpel" layoutX="199.0" layoutY="374.0" mnemonicParsing="false" onAction="#btStartGame" text="Start Spel" />
+            <Button fx:id="btStartSpel" layoutX="199.0" layoutY="374.0" mnemonicParsing="false" onAction="#btMaakGame" text="Maak Spel" />
+            <Button fx:id="btRefresh" layoutX="209.0" layoutY="4.0" mnemonicParsing="false" onAction="#btRefreshKlik" text="Refresh" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="240.0">

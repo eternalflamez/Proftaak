@@ -29,6 +29,9 @@ public class Server {
              cs = new ChatServer();
       
             Naming.rebind("cs", (Remote) cs);
+            LobbyServer ls = new LobbyServer();
+            
+            Naming.rebind("ls", (Remote) ls);
             System.out.println("Running...");
         } catch (RemoteException exc) {
             System.out.println(exc);

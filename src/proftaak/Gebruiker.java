@@ -43,6 +43,14 @@ public class Gebruiker implements Observer {
         ratingLijst.add(rating);
 
     }
+    public Gebruiker (String naam, int highScore, double rating, ArrayList<Double> ratinglijst)
+    {
+        this.Name = naam;
+        this.highScore = highScore;
+        this.rating = rating;
+        this.ratingLijst=ratinglijst;
+    }
+    
 
     public String getNaam() {
         return Name;
@@ -54,6 +62,10 @@ public class Gebruiker implements Observer {
 
     public double getRating() {
         return rating;
+    }
+       public ArrayList<Double> getRatingLijst()
+    {
+        return ratingLijst;
     }
 
     public void setNewHighscore(int newScore) {
